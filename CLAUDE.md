@@ -175,9 +175,29 @@ Live-Seite Artikel speichern können (siehe Erklärung oben bei Schritt 3):
 
 ### 5. Eigene Domain (optional, nicht kostenlos)
 Die `*.vercel.app`-Adresse ist dauerhaft kostenlos. Eine eigene Domain
-(z. B. `leonida-living.de`) kostet bei einem Registrar meist 10–15 €/Jahr
-und lässt sich später jederzeit unter Vercel → Settings → Domains
-ergänzen – kein Muss für den Start.
+(z. B. `leonida-living.de`) kostet bei einem Registrar meist 10–15 €/Jahr.
+Das Hosting selbst bleibt Vercel (Cron-Job, Freigabe-Workflow etc.
+funktionieren nur dort wie eingerichtet) – es wird nur die Adresse
+ausgetauscht.
+
+1. **Domain kaufen** bei einem Registrar, z. B. IONOS, Namecheap, INWX
+   oder Porkbun. Empfehlenswert: `.de` für eine deutsche Zielgruppe, oder
+   eine themenpassende `.com`/`.gg`.
+2. In Vercel: Projekt **gta-hub** → **Settings** → **Domains** → Domain
+   eingeben → "Add". Vercel zeigt dir die nötigen DNS-Einträge an
+   (meist ein **A-Eintrag** für die nackte Domain und ein **CNAME** für
+   `www`, Ziel jeweils von Vercel vorgegeben).
+3. Diese Einträge beim Registrar in der DNS-Verwaltung eintragen (Name
+   und Wert exakt wie von Vercel angezeigt übernehmen).
+4. Warten, bis Vercel die Domain als "Valid Configuration" anzeigt
+   (DNS-Ausbreitung dauert meist Minuten bis wenige Stunden). SSL-Zertifikat
+   wird automatisch und kostenlos eingerichtet.
+5. `NEXT_PUBLIC_SITE_URL` in den Vercel-Umgebungsvariablen auf die neue
+   Domain ändern (z. B. `https://leonida-living.de`) und einmal
+   redeployen.
+6. Optional: die alte `*.vercel.app`-Adresse in Vercel unter Domains auf
+   "Redirect to" die neue Domain stellen, damit alte Links weiterhin
+   funktionieren.
 
 ### 6. Rechtliches nicht vergessen
 Vor dem Teilen des Links öffentlich: in `/impressum` und `/datenschutz`
