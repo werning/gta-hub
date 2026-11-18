@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { ContentCard } from "@/components/ContentCard";
 
@@ -6,8 +7,17 @@ export default function Home() {
     <div>
       {/* Hero */}
       <section className="relative overflow-hidden border-b border-white/10">
+        <Image
+          src="/hero-skyline.webp"
+          alt="Vice-City-inspirierte Skyline bei Sonnenuntergang"
+          fill
+          priority
+          sizes="100vw"
+          className="-z-20 object-cover"
+        />
+        <div className="absolute inset-0 -z-10 bg-gradient-to-b from-[#0b0414]/70 via-[#0b0414]/55 to-[#0b0414]" />
         <div
-          className="absolute inset-0 -z-10 opacity-40"
+          className="absolute inset-0 -z-10 opacity-60"
           style={{
             background:
               "radial-gradient(60% 50% at 50% 0%, var(--brand-purple) 0%, transparent 60%), radial-gradient(40% 40% at 85% 20%, var(--brand-pink) 0%, transparent 70%)",
