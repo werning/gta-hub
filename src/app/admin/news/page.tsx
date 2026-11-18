@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { getDraftArticles } from "@/lib/articles";
 import { isAdminAuthenticated } from "@/lib/admin-auth";
 import { approveArticle, logout, rejectArticle } from "../actions";
+import { SubmitButton } from "@/components/SubmitButton";
 
 export const metadata: Metadata = {
   title: "Artikel freigeben",
@@ -31,7 +32,7 @@ export default async function AdminNewsPage() {
           </p>
         </div>
         <form action={logout}>
-          <button className="text-sm text-white/50 hover:text-white">
+          <button className="cursor-pointer text-sm text-white/50 hover:text-white">
             Abmelden
           </button>
         </form>
@@ -71,14 +72,20 @@ export default async function AdminNewsPage() {
 
             <div className="mt-5 flex gap-3">
               <form action={approveArticle.bind(null, article.slug)}>
-                <button className="rounded-full bg-gradient-to-r from-[#ff2e88] to-[#6c1bd6] px-5 py-2 text-sm font-semibold text-white">
+                <SubmitButton
+                  pendingText="Wird freigegeben …"
+                  className="rounded-full bg-gradient-to-r from-[#ff2e88] to-[#6c1bd6] px-5 py-2 text-sm font-semibold text-white transition-opacity"
+                >
                   Freigeben
-                </button>
+                </SubmitButton>
               </form>
               <form action={rejectArticle.bind(null, article.slug)}>
-                <button className="rounded-full border border-white/20 px-5 py-2 text-sm text-white/70 hover:bg-white/5">
+                <SubmitButton
+                  pendingText="Wird verworfen …"
+                  className="rounded-full border border-white/20 px-5 py-2 text-sm text-white/70 transition-colors hover:bg-white/5"
+                >
                   Verwerfen
-                </button>
+                </SubmitButton>
               </form>
             </div>
           </article>
