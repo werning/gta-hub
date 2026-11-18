@@ -4,6 +4,13 @@ GTA-6-Community-Hub. Inoffizielle Fan-Seite, **nicht** verbunden mit Rockstar
 Games oder Take-Two Interactive. Keine Rockstar-Logos, -Bilder oder -Videos –
 nur eigene Texte und eigene Grafiken.
 
+**Live:** https://gta-hub-psi.vercel.app
+**GitHub:** https://github.com/werning/gta-hub
+**Vercel-Projekt:** https://vercel.com/werning/gta-hub
+**Admin-Login:** https://gta-hub-psi.vercel.app/admin/login (Passwort: siehe
+Vercel-Umgebungsvariable `ADMIN_PASSWORD`, wurde dir im Chat mitgeteilt –
+am besten zeitnah selbst ändern)
+
 ## Eckdaten (vom Nutzer festgelegt)
 
 - **Name:** Leonida Living
@@ -103,12 +110,13 @@ die Vorschau-Funktion gestartet (Konfiguration in
       Claude API in eigenen Worten umschreiben (mit Quellenangabe), als
       Entwurf speichern, Freigabe-Oberfläche unter `/admin/news`. Lokal
       getestet und funktionsfähig, inkl. einem echten Beispielartikel.
-- [x] **Schritt 4 – Online stellen:** Code & Anleitung stehen (siehe unten).
-      Tatsächliches Veröffentlichen (GitHub-Push, Vercel-Projekt) passiert
-      erst nach deinem OK, da dafür deine eigenen Accounts nötig sind.
-      Impressum/Datenschutz sind als ausfüllbare Vorlagen angelegt – echte
-      Angaben (Name, Adresse, E-Mail) musst du selbst eintragen, bevor die
-      Seite öffentlich wird.
+- [x] **Schritt 4 – Online stellen:** Seite ist live unter
+      https://gta-hub-psi.vercel.app, Code auf GitHub, alle sechs
+      Umgebungsvariablen in Vercel gesetzt, Cron-Job aktiv (läuft ab morgen
+      täglich automatisch). Offen: Impressum/Datenschutz enthalten noch
+      Platzhalter – echte Angaben (Name, Adresse, E-Mail) selbst eintragen,
+      bevor der Link breit geteilt wird. Eigene Domain optional, siehe
+      Abschnitt 5 unten.
 
 ## Schritt 4 – Online stellen (Schritt für Schritt)
 
