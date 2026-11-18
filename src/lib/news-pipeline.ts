@@ -92,7 +92,7 @@ async function rewriteWithClaude(anthropic: Anthropic, item: FeedItem) {
 
   const message = await anthropic.messages.create({
     model: MODEL,
-    max_tokens: 1024,
+    max_tokens: 2048,
     system:
       "Du bist Redakteur bei 'Leonida Living', einer deutschsprachigen, " +
       "inoffiziellen GTA-6-Fan-Community-Seite. Du bekommst einen " +
@@ -100,11 +100,12 @@ async function rewriteWithClaude(anthropic: Anthropic, item: FeedItem) {
       "ausschließlich die darin enthaltenen Fakten auf Deutsch in eigenen, " +
       "neuen Worten zusammen. Erfinde nichts, das nicht im Text steht. " +
       "Kopiere keine Sätze wörtlich. Schreibe sachlich und für Fans " +
-      "verständlich. Antworte NUR mit kompaktem JSON ohne Markdown-Codeblock, " +
-      "mit genau diesen Feldern: " +
+      "verständlich. Halte dich kurz: maximal 3 Absätze mit je maximal " +
+      "3 Sätzen. Antworte NUR mit kompaktem, vollständigem JSON ohne " +
+      "Markdown-Codeblock, mit genau diesen Feldern: " +
       '{"title": "eigener deutscher Titel, keine Wort-für-Wort-Übersetzung", ' +
       '"excerpt": "ein Satz Zusammenfassung", ' +
-      '"paragraphs": ["Absatz 1", "Absatz 2"], ' +
+      '"paragraphs": ["Absatz 1", "Absatz 2", "Absatz 3"], ' +
       '"tag": "eine von Release, Gameplay, Setting, Patch, Sonstiges"}',
     messages: [
       {
