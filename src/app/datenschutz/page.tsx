@@ -10,14 +10,6 @@ export default function DatenschutzPage() {
     <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6">
       <h1 className="text-3xl font-bold text-white">Datenschutzerklärung</h1>
 
-      <div className="mt-6 rounded-xl border border-dashed border-[#ff8fc0]/40 bg-[#ff2e88]/5 px-4 py-3 text-sm text-white/70">
-        <strong className="text-white">Vorlage, kein Rechtsrat.</strong> Diese
-        Vorlage beschreibt den aktuellen Stand von Leonida Living in der
-        Launch-Phase: keine Zahlungen, keine Nutzerkonten, keine
-        Analyse-Tools. Ergänze den Text, sobald weitere Dienste dazukommen
-        (z. B. Zahlungsanbieter, Login, Newsletter, Statistik-Tools).
-      </div>
-
       <section className="mt-8 space-y-6 text-white/80">
         <div>
           <h2 className="text-lg font-semibold text-white">
