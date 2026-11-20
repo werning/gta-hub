@@ -3,10 +3,9 @@
 // Modul, damit es über src/lib/hacks.ts speichert (lokal = Dateisystem,
 // online = Commit über die GitHub-API).
 //
-// Wichtig: GTA 6 ist noch nicht erschienen, es gibt also keine getesteten
-// Hacks/Tricks. Der Prompt verlangt deshalb ausdrücklich eine Einschätzung
-// auf Basis dessen, was aus seriösen Quellen zu Gameplay-Mechaniken
-// bekannt ist – keine erfundenen Tricks.
+// GTA 6 ist seit dem 19.11.2026 erschienen. Der Prompt verlangt trotzdem
+// ausdrücklich, nur das aus der Quelle Bekannte zusammenzufassen – keine
+// erfundenen Tricks oder Mechaniken, die im Quelltext nicht stehen.
 
 import { readFileSync } from "fs";
 import path from "path";
@@ -118,20 +117,18 @@ async function rewriteWithClaude(anthropic: Anthropic, item: FeedItem) {
     system:
       "Du bist Redakteur bei 'Leonida Living', einer deutschsprachigen, " +
       "inoffiziellen GTA-6-Fan-Community-Seite, im Bereich 'Hacks & " +
-      "Tricks'. GTA 6 ist noch NICHT erschienen – es gibt also noch " +
-      "keine getesteten Hacks oder Tricks. Du bekommst einen Ausschnitt " +
-      "eines englischsprachigen Gaming-News-Artikels mit Infos zu " +
-      "Gameplay-Mechaniken, Karte, Wirtschaft, Fahrzeugen oder Kampf. " +
-      "Fasse ausschließlich die darin enthaltenen Fakten auf Deutsch in " +
-      "eigenen, neuen Worten als EINSCHÄTZUNG zusammen – niemals als " +
-      "getesteten Trick, da sich Mechaniken noch ändern können. Erfinde " +
-      "keine Tricks oder Mechaniken, die nicht im Text stehen. Kopiere " +
-      "keine Sätze wörtlich. Schreibe sachlich und für Fans verständlich. " +
-      "Halte dich kurz: maximal 3 Absätze mit je maximal 3 Sätzen. " +
-      "Antworte NUR mit kompaktem, vollständigem JSON ohne Markdown-" +
-      "Codeblock, mit genau diesen Feldern: " +
-      '{"title": "eigener deutscher Titel, der klar als Einschätzung/' +
-      'Vorschau erkennbar ist, keine Wort-für-Wort-Übersetzung", ' +
+      "Tricks'. GTA 6 ist bereits erschienen. Du bekommst einen " +
+      "Ausschnitt eines englischsprachigen Gaming-News-Artikels mit " +
+      "Infos zu Gameplay-Mechaniken, Karte, Wirtschaft, Fahrzeugen oder " +
+      "Kampf. Fasse ausschließlich die darin enthaltenen Fakten auf " +
+      "Deutsch in eigenen, neuen Worten als hilfreichen Tipp bzw. Trick " +
+      "zusammen. Erfinde keine Tricks oder Mechaniken, die nicht im Text " +
+      "stehen. Kopiere keine Sätze wörtlich. Schreibe sachlich und für " +
+      "Fans verständlich. Halte dich kurz: maximal 3 Absätze mit je " +
+      "maximal 3 Sätzen. Antworte NUR mit kompaktem, vollständigem JSON " +
+      "ohne Markdown-Codeblock, mit genau diesen Feldern: " +
+      '{"title": "eigener deutscher Titel, keine Wort-für-Wort-' +
+      'Übersetzung", ' +
       '"excerpt": "ein Satz Zusammenfassung", ' +
       '"paragraphs": ["Absatz 1", "Absatz 2", "Absatz 3"], ' +
       '"tag": "eine von Bewegung, Wirtschaft, Kampf, Sonstiges"}',

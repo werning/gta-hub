@@ -3,10 +3,9 @@
 // TypeScript-Modul, damit es über src/lib/guides.ts speichert (lokal =
 // Dateisystem, online = Commit über die GitHub-API).
 //
-// Wichtig: GTA 6 ist noch nicht erschienen, es gibt also keine echten
-// Missions-Walkthroughs. Der Prompt verlangt deshalb ausdrücklich eine
-// Vorschau dessen, was aus seriösen Quellen zu Missionen/Story bekannt ist
-// – keine erfundenen Schritt-für-Schritt-Anleitungen.
+// GTA 6 ist seit dem 19.11.2026 erschienen. Der Prompt verlangt trotzdem
+// ausdrücklich, nur das aus der Quelle Bekannte zusammenzufassen – keine
+// erfundenen Missionsschritte oder Details, die im Quelltext nicht stehen.
 
 import { readFileSync } from "fs";
 import path from "path";
@@ -115,20 +114,21 @@ async function rewriteWithClaude(anthropic: Anthropic, item: FeedItem) {
     system:
       "Du bist Redakteur bei 'Leonida Living', einer deutschsprachigen, " +
       "inoffiziellen GTA-6-Fan-Community-Seite, im Bereich " +
-      "'Missionsanleitungen'. GTA 6 ist noch NICHT erschienen – es gibt " +
-      "also keine echten Spieldurchläufe. Du bekommst einen Ausschnitt " +
-      "eines englischsprachigen Gaming-News-Artikels mit Infos zu " +
-      "Missionen, Story oder Charakteren. Fasse ausschließlich die darin " +
-      "enthaltenen Fakten auf Deutsch in eigenen, neuen Worten als " +
-      "VORSCHAU zusammen – niemals als fertige Schritt-für-Schritt-" +
-      "Anleitung, da das Gameplay noch nicht bekannt ist. Erfinde keine " +
+      "'Missionsanleitungen'. GTA 6 ist bereits erschienen. Du bekommst " +
+      "einen Ausschnitt eines englischsprachigen Gaming-News- oder Guide-" +
+      "Artikels mit Infos zu Missionen, Story, Charakteren oder " +
+      "Spielschritten. Fasse ausschließlich die darin enthaltenen Fakten " +
+      "auf Deutsch in eigenen, neuen Worten als hilfreiche Anleitung bzw. " +
+      "Zusammenfassung für Spieler:innen zusammen. Erfinde keine " +
       "Missionsschritte, Spielmechaniken oder Details, die nicht im Text " +
-      "stehen. Kopiere keine Sätze wörtlich. Schreibe sachlich und für " +
-      "Fans verständlich. Halte dich kurz: maximal 3 Absätze mit je " +
-      "maximal 3 Sätzen. Antworte NUR mit kompaktem, vollständigem JSON " +
-      "ohne Markdown-Codeblock, mit genau diesen Feldern: " +
-      '{"title": "eigener deutscher Titel, der klar als Vorschau/Preview ' +
-      'erkennbar ist, keine Wort-für-Wort-Übersetzung", ' +
+      "stehen – liefert die Quelle nur Hintergrundinfos statt konkreter " +
+      "Schritte, fasse genau das zusammen, statt Schritte zu erfinden. " +
+      "Kopiere keine Sätze wörtlich. Schreibe sachlich und für Fans " +
+      "verständlich. Halte dich kurz: maximal 3 Absätze mit je maximal " +
+      "3 Sätzen. Antworte NUR mit kompaktem, vollständigem JSON ohne " +
+      "Markdown-Codeblock, mit genau diesen Feldern: " +
+      '{"title": "eigener deutscher Titel, keine Wort-für-Wort-' +
+      'Übersetzung", ' +
       '"excerpt": "ein Satz Zusammenfassung", ' +
       '"paragraphs": ["Absatz 1", "Absatz 2", "Absatz 3"], ' +
       '"tag": "eine von Hauptmission, Nebenmission, Gameplay, Sonstiges"}',

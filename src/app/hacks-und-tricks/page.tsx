@@ -19,11 +19,9 @@ export default function HacksPage() {
           Hacks &amp; Tricks
         </h1>
         <p className="mt-3 max-w-2xl text-white/60">
-          GTA 6 ist noch nicht erschienen – getestete Tricks gibt es deshalb
-          noch nicht. Hier sammeln wir stattdessen Einschätzungen zu
-          Bewegung, Wirtschaft und Kampf auf Basis dessen, was aus
-          seriösen Quellen bekannt ist. Sauber getrennt zwischen
-          bestätigten Fakten und begründeten Einschätzungen.
+          Seit dem Release von GTA 6 sammeln wir hier Tipps und Tricks zu
+          Bewegung, Wirtschaft und Kampf aus seriösen Quellen – verständlich
+          zusammengefasst und mit Quellenangabe.
         </p>
       </header>
 

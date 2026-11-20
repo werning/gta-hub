@@ -68,9 +68,8 @@ export default async function MissionsanleitungDetailPage({ params }: Props) {
         >
           {guide.sourceName}
         </a>
-        . Dieser Beitrag ist eine Vorschau in eigenen Worten auf Basis der
-        bisher bekannten Infos, kein vollständiger Walkthrough – GTA 6 ist
-        noch nicht erschienen.
+        . Dieser Beitrag ist eine Zusammenfassung in eigenen Worten, kein
+        Originaltext der Quelle.
       </p>
     </article>
   );

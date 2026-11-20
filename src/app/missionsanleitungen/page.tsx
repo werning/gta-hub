@@ -18,13 +18,11 @@ export default function MissionsanleitungenPage() {
           Missionsanleitungen
         </h1>
         <p className="mt-3 max-w-2xl text-white/60">
-          GTA 6 ist noch nicht erschienen – echte Schritt-für-Schritt-
-          Anleitungen gibt es deshalb noch nicht. Hier sammeln wir
-          stattdessen, was aus seriösen Quellen zu Missionen, Story und
-          Charakteren bekannt ist. Sobald das Spiel da ist, werden daraus
-          vollständige Anleitungen. In der Launch-Phase sind sie für alle
-          komplett kostenlos – später wird ein Teil davon Mitgliedern
-          vorbehalten sein.
+          Seit dem Release von GTA 6 sammeln wir hier Schritt-für-Schritt-
+          Anleitungen und Zusammenfassungen zu Missionen, Story und
+          Charakteren aus seriösen Quellen. In der Launch-Phase sind sie
+          für alle komplett kostenlos – später wird ein Teil davon
+          Mitgliedern vorbehalten sein.
         </p>
       </header>
 

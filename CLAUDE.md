@@ -141,10 +141,13 @@ die Vorschau-Funktion gestartet (Konfiguration in
 - [x] **Schritt 5 – Missionsanleitungen, Hacks & Tricks, Tipps:** alle drei
       nach demselben Prinzip wie der News-Workflow (RSS → Claude API →
       Entwurf → Freigabe unter `/admin/<bereich>`), aber jeweils mit
-      eigenen Schlagwörtern gefiltert und mit eigenem Prompt, der die
-      Inhalte klar als **Vorschau/Einschätzung** formuliert statt als
-      fertige Anleitung/getesteten Trick – GTA 6 ist noch nicht
-      erschienen. Eigene Cron-Jobs, alle zwischen 5 und 6 Uhr UTC gestaffelt
+      eigenen Schlagwörtern gefiltert. Ursprünglich (Stand vor Release)
+      formulierten die Prompts bewusst als **Vorschau/Einschätzung** statt
+      als fertige Anleitung/getesteten Trick, weil GTA 6 noch nicht
+      erschienen war. Seit dem Release am 19.11.2026 sind Prompts und
+      Seitentexte auf echte Anleitungen/Tipps umgestellt (20.11.2026) –
+      weiterhin mit der Regel, nichts über die jeweilige Quelle hinaus zu
+      erfinden. Eigene Cron-Jobs, alle zwischen 5 und 6 Uhr UTC gestaffelt
       (Missionsanleitungen 5:15, Hacks & Tricks 5:30, Tipps 5:45 Uhr UTC,
       siehe `vercel.json`) – so sind morgens bis 7 Uhr alle vier Bereiche
       für die Freigabe bereit. Details siehe eigener Abschnitt unten.
@@ -334,12 +337,13 @@ erzeugt.
 
 ## Schritt 5 – Missionsanleitungen, Hacks & Tricks, Tipps (Details)
 
-**Warum Vorschauen/Einschätzungen statt fertiger Inhalte:** GTA 6 ist noch
-nicht erschienen, es gibt also weder echte Missions-Walkthroughs noch
-getestete Hacks. Statt etwas zu erfinden, fassen diese drei Workflows
-zusammen, was seriöse Quellen bereits verraten haben – klar als
-Vorschau/Einschätzung gekennzeichnet. Sobald das Spiel da ist, kann daraus
-(manuell oder mit einem neuen Prompt) echter Anleitungs-Content werden.
+**Vorgeschichte (bis 19.11.2026):** Vor dem Release gab es noch keine
+echten Missions-Walkthroughs oder getesteten Hacks. Die Prompts verlangten
+deshalb explizit eine als Vorschau/Einschätzung gekennzeichnete
+Zusammenfassung statt fertiger Anleitungen. **Seit dem Release (20.11.2026
+umgestellt):** Prompts und Seitentexte formulieren jetzt als echte
+Anleitungen/Tipps. Die Grundregel bleibt gleich: nichts erfinden, was
+nicht in der jeweiligen Quelle steht.
 
 **Wie es funktioniert:** identisch zum News-Workflow (siehe oben,
 RSS → Claude API → Entwurf → Freigabe), aber jeder Bereich hat eigene

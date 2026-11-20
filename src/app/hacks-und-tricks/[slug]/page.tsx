@@ -67,9 +67,8 @@ export default async function HackDetailPage({ params }: Props) {
         >
           {hack.sourceName}
         </a>
-        . Dieser Beitrag ist eine Einschätzung in eigenen Worten auf Basis
-        der bisher bekannten Infos, kein getesteter Trick – GTA 6 ist noch
-        nicht erschienen.
+        . Dieser Beitrag ist eine Zusammenfassung in eigenen Worten, kein
+        Originaltext der Quelle.
       </p>
     </article>
   );
