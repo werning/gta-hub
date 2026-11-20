@@ -6,15 +6,15 @@
     },
     {
       "path": "/api/cron/fetch-guides",
-      "schedule": "0 7 * * *"
+      "schedule": "15 5 * * *"
     },
     {
       "path": "/api/cron/fetch-hacks",
-      "schedule": "0 9 * * *"
+      "schedule": "30 5 * * *"
     },
     {
       "path": "/api/cron/fetch-tipps",
-      "schedule": "0 11 * * *"
+      "schedule": "45 5 * * *"
     }
   ]
 }

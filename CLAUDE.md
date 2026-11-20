@@ -126,7 +126,7 @@ die Vorschau-Funktion gestartet (Konfiguration in
 - [x] **Schritt 4 – Online stellen:** Seite ist live unter
       https://gta-hub-psi.vercel.app, Code auf GitHub, alle sechs
       Umgebungsvariablen in Vercel gesetzt, Cron-Job aktiv (News läuft
-      täglich 5 Uhr UTC). Offen: Impressum/Datenschutz enthalten noch
+      täglich 5:00 Uhr UTC). Offen: Impressum/Datenschutz enthalten noch
       Platzhalter – echte Angaben (Name, Adresse, E-Mail) selbst eintragen,
       bevor der Link breit geteilt wird. Eigene Domain optional, siehe
       Abschnitt 5 unten.
@@ -136,9 +136,10 @@ die Vorschau-Funktion gestartet (Konfiguration in
       eigenen Schlagwörtern gefiltert und mit eigenem Prompt, der die
       Inhalte klar als **Vorschau/Einschätzung** formuliert statt als
       fertige Anleitung/getesteten Trick – GTA 6 ist noch nicht
-      erschienen. Eigene Cron-Jobs (Missionsanleitungen 7, Hacks & Tricks
-      9, Tipps 11 Uhr UTC, siehe `vercel.json`). Details siehe eigener
-      Abschnitt unten.
+      erschienen. Eigene Cron-Jobs, alle zwischen 5 und 6 Uhr UTC gestaffelt
+      (Missionsanleitungen 5:15, Hacks & Tricks 5:30, Tipps 5:45 Uhr UTC,
+      siehe `vercel.json`) – so sind morgens bis 7 Uhr alle vier Bereiche
+      für die Freigabe bereit. Details siehe eigener Abschnitt unten.
 
 ## Schritt 4 – Online stellen (Schritt für Schritt)
 
@@ -317,9 +318,9 @@ was nicht in der Quelle steht) und eigene Tags:
 
 | Bereich | Lib/Pipeline | Zusätzliche Schlagwörter | Tags | Admin | Cron (UTC) |
 |---|---|---|---|---|---|
-| Missionsanleitungen | `guides.ts` / `guide-pipeline.ts` | mission, heist, story, protagonist, jason, lucia, … | Hauptmission, Nebenmission, Gameplay, Sonstiges | `/admin/missionsanleitungen` | 7 Uhr |
-| Hacks & Tricks | `hacks.ts` / `hacks-pipeline.ts` | gameplay, map, economy, weapon, vehicle, cover, … | Bewegung, Wirtschaft, Kampf, Sonstiges | `/admin/hacks-und-tricks` | 9 Uhr |
-| Tipps | `tipps.ts` / `tipps-pipeline.ts` | platform, pre-order, price, requirements, beginner, … | Technik, Vorbestellung, Einsteiger, Sonstiges | `/admin/tipps` | 11 Uhr |
+| Missionsanleitungen | `guides.ts` / `guide-pipeline.ts` | mission, heist, story, protagonist, jason, lucia, … | Hauptmission, Nebenmission, Gameplay, Sonstiges | `/admin/missionsanleitungen` | 5:15 Uhr |
+| Hacks & Tricks | `hacks.ts` / `hacks-pipeline.ts` | gameplay, map, economy, weapon, vehicle, cover, … | Bewegung, Wirtschaft, Kampf, Sonstiges | `/admin/hacks-und-tricks` | 5:30 Uhr |
+| Tipps | `tipps.ts` / `tipps-pipeline.ts` | platform, pre-order, price, requirements, beginner, … | Technik, Vorbestellung, Einsteiger, Sonstiges | `/admin/tipps` | 5:45 Uhr |
 
 Jeder Treffer muss zusätzlich eines der GTA-6-Schlagwörter aus dem
 News-Workflow enthalten (UND-Verknüpfung) – nicht jeder GTA-6-Artikel
@@ -335,10 +336,12 @@ npm --prefix Projects/leonida-living run tipps:fetch:dry
 ```
 
 **Cron:** je ein eigener Vercel-Cron-Job (siehe Tabelle oben und
-`vercel.json`), gestaffelt nach News (5 Uhr), damit nicht alle vier
-gleichzeitig laufen – nutzt dieselben Umgebungsvariablen wie News
-(`ANTHROPIC_API_KEY`, `CRON_SECRET`, `GITHUB_TOKEN`/`GITHUB_REPO`/
-`GITHUB_BRANCH`).
+`vercel.json`), alle viertelstündlich gestaffelt zwischen 5:00 und
+6:00 Uhr UTC (News 5:00, Missionsanleitungen 5:15, Hacks & Tricks 5:30,
+Tipps 5:45), damit nicht alle vier gleichzeitig laufen und morgens beim
+Frühstück (z. B. 7 Uhr) bereits alle vier Entwürfe zur Freigabe bereit
+stehen – nutzt dieselben Umgebungsvariablen wie News (`ANTHROPIC_API_KEY`,
+`CRON_SECRET`, `GITHUB_TOKEN`/`GITHUB_REPO`/`GITHUB_BRANCH`).
 
 ## Täglicher Start
 
