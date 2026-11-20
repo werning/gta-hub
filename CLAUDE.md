@@ -10,8 +10,9 @@ denselben Inhalt)
 **GitHub:** https://github.com/werning/gta-hub
 **Vercel-Projekt:** https://vercel.com/werning/gta-hub
 **Admin-Login:** https://www.leonida-living.de/admin/login (Passwort: siehe
-Vercel-Umgebungsvariable `ADMIN_PASSWORD`, wurde dir im Chat mitgeteilt –
-am besten zeitnah selbst ändern)
+Vercel-Umgebungsvariable `ADMIN_PASSWORD` – am 20.11.2026 auf ein neues,
+zufällig generiertes Passwort geändert, dir im Chat mitgeteilt. Nirgendwo
+im Code oder in dieser Datei hinterlegt.)
 
 ## Eckdaten (vom Nutzer festgelegt)
 
@@ -130,9 +131,13 @@ die Vorschau-Funktion gestartet (Konfiguration in
       Umgebungsvariablen in Vercel gesetzt, Cron-Job aktiv (News läuft
       täglich 5:00 Uhr UTC). Eigene Domain ist seit 20.11.2026 eingerichtet
       (siehe Abschnitt 5 unten), Impressum und Datenschutzerklärung tragen
-      seit 20.11.2026 die echten Angaben des Betreibers. Offen: falls noch
-      nicht geschehen, `ADMIN_PASSWORD` zeitnah selbst in Vercel ändern
-      (ursprünglich im Chat mitgeteiltes Passwort).
+      seit 20.11.2026 die echten Angaben des Betreibers. `ADMIN_PASSWORD`
+      wurde am 20.11.2026 auf ein neues, zufällig generiertes Passwort
+      geändert (Redeploy durchgeführt, Login getestet). Seit demselben Tag
+      gibt es außerdem ein Open-Graph-Vorschaubild
+      ([src/app/opengraph-image.tsx](src/app/opengraph-image.tsx)) im
+      Marken-Look, damit geteilte Links in Discord/WhatsApp/Twitter eine
+      Bildvorschau zeigen.
 - [x] **Schritt 5 – Missionsanleitungen, Hacks & Tricks, Tipps:** alle drei
       nach demselben Prinzip wie der News-Workflow (RSS → Claude API →
       Entwurf → Freigabe unter `/admin/<bereich>`), aber jeweils mit
