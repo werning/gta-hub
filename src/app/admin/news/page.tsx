@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getDraftArticles } from "@/lib/articles";
 import { isAdminAuthenticated } from "@/lib/admin-auth";
 import { approveArticle, logout, rejectArticle } from "../actions";
 import { SubmitButton } from "@/components/SubmitButton";
+import { AdminNav } from "@/components/AdminNav";
 
 export const metadata: Metadata = {
   title: "Artikel freigeben",
@@ -23,15 +23,10 @@ export default async function AdminNewsPage() {
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6">
+      <AdminNav current="/admin/news" />
       <div className="mb-10 flex items-center justify-between">
         <div>
-          <Link
-            href="/admin/missionsanleitungen"
-            className="text-sm text-white/50 hover:text-white"
-          >
-            Missionsanleitungen freigeben →
-          </Link>
-          <h1 className="mt-2 text-3xl font-bold text-white">Artikel freigeben</h1>
+          <h1 className="text-3xl font-bold text-white">Artikel freigeben</h1>
           <p className="mt-2 text-white/60">
             {drafts.length === 0
               ? "Aktuell keine offenen Entwürfe."

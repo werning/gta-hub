@@ -58,20 +58,23 @@ src/
     news/page.tsx
     hacks-und-tricks/page.tsx
     tipps/page.tsx
-    missionsanleitungen/page.tsx   Vorschauen zu Missionen/Story (Details unten)
+    missionsanleitungen/page.tsx   alle vier: Vorschau-/Einschätzungsinhalte (Details unten)
     karte/page.tsx
     premium/page.tsx          "Launch-Phase"-Seite (aktuell kostenlos)
     impressum/page.tsx        Platzhalter (echter Inhalt in Schritt 4)
     datenschutz/page.tsx      Platzhalter (echter Inhalt in Schritt 4)
-    news/[slug]/page.tsx       Artikel-Detailseite
-    missionsanleitungen/[slug]/page.tsx   Detailseite einer Vorschau
-    api/cron/fetch-news/route.ts    Vercel-Cron-Endpunkt News
-    api/cron/fetch-guides/route.ts  Vercel-Cron-Endpunkt Missionsanleitungen
+    news/[slug]/page.tsx       Detailseite je Content-Typ (ebenso für
+    missionsanleitungen/[slug]/page.tsx   hacks-und-tricks und tipps)
+    hacks-und-tricks/[slug]/page.tsx
+    tipps/[slug]/page.tsx
+    api/cron/fetch-{news,guides,hacks,tipps}/route.ts   je ein Vercel-Cron-Endpunkt
     admin/
       page.tsx                 Redirect je nach Login-Status
       login/page.tsx            Passwort-Login
-      news/page.tsx             News-Entwürfe freigeben/verwerfen
-      missionsanleitungen/page.tsx   Missionsanleitungen-Entwürfe freigeben/verwerfen
+      news/page.tsx             Entwürfe freigeben/verwerfen (ebenso
+      missionsanleitungen/page.tsx   missionsanleitungen/, hacks-und-tricks/
+      hacks-und-tricks/page.tsx       und tipps/ – gleicher Aufbau, eigene
+      tipps/page.tsx                  Daten)
       actions.ts                 Server Actions (login, logout, approve/reject je Typ)
   components/
     Header.tsx                Client Component, mobiles Menü
@@ -79,26 +82,23 @@ src/
     Logo.tsx                  eigenes SVG-Logo
     ContentCard.tsx            wiederverwendbare Vorschau-Karte (mit Premium-Badge)
     PlaceholderNotice.tsx      Hinweisbanner für Platzhalterinhalte
+    AdminNav.tsx               Wechsel-Navigation zwischen den vier Admin-Freigabeseiten
   lib/
     nav.ts                     Navigationspunkte, Site-Name
     site.ts                    Preis-/Launch-Konstanten
     content-store.ts            generische Basis: lesen/schreiben/Status je Content-Ordner
-    articles.ts                 News, über content-store.ts (content/news/*.json)
-    guides.ts                   Missionsanleitungen, über content-store.ts (content/missionsanleitungen/*.json)
-    news-pipeline.ts            Produktions-Workflow News (für Cron-Route)
-    guide-pipeline.ts           Produktions-Workflow Missionsanleitungen (für Cron-Route)
+    articles.ts / guides.ts / hacks.ts / tipps.ts   je Content-Typ, über content-store.ts
+    news-pipeline.ts / guide-pipeline.ts / hacks-pipeline.ts / tipps-pipeline.ts
+                                 Produktions-Workflow je Typ (für die Cron-Routen)
     github-content.ts           Commit/Delete von Content-Dateien über die GitHub-API (online)
     admin-auth.ts                Passwort-Session-Check für /admin
 content/
-  news/
-    _feeds.json                 Liste der RSS-Quellen
-    <slug>.json                  ein Artikel (draft oder published)
-  missionsanleitungen/
-    _feeds.json                 Liste der RSS-Quellen (aktuell dieselben wie News)
-    <slug>.json                  eine Vorschau (draft oder published)
+  news/                        _feeds.json + <slug>.json (draft oder published)
+  missionsanleitungen/         dito
+  hacks-und-tricks/            dito
+  tipps/                       dito
 scripts/
-  fetch-news.mjs                 täglicher News-Workflow, lokal (siehe unten)
-  fetch-guides.mjs                täglicher Missionsanleitungen-Workflow, lokal (siehe unten)
+  fetch-{news,guides,hacks,tipps}.mjs   je ein lokaler täglicher Workflow (siehe unten)
 ```
 
 ## Lokal starten
@@ -130,13 +130,15 @@ die Vorschau-Funktion gestartet (Konfiguration in
       Platzhalter – echte Angaben (Name, Adresse, E-Mail) selbst eintragen,
       bevor der Link breit geteilt wird. Eigene Domain optional, siehe
       Abschnitt 5 unten.
-- [x] **Schritt 5 – Missionsanleitungen-Workflow:** gleiches Prinzip wie der
-      News-Workflow (RSS → Claude API → Entwurf → Freigabe unter
-      `/admin/missionsanleitungen`), aber auf Missions-/Story-Schlagworte
-      gefiltert und als klar gekennzeichnete **Vorschau** formuliert, nicht
-      als fertiger Walkthrough – GTA 6 ist noch nicht erschienen, es gibt
-      also keine echten Spieldurchläufe. Eigener Cron-Job, 7 Uhr UTC (siehe
-      `vercel.json`). Details siehe eigener Abschnitt unten.
+- [x] **Schritt 5 – Missionsanleitungen, Hacks & Tricks, Tipps:** alle drei
+      nach demselben Prinzip wie der News-Workflow (RSS → Claude API →
+      Entwurf → Freigabe unter `/admin/<bereich>`), aber jeweils mit
+      eigenen Schlagwörtern gefiltert und mit eigenem Prompt, der die
+      Inhalte klar als **Vorschau/Einschätzung** formuliert statt als
+      fertige Anleitung/getesteten Trick – GTA 6 ist noch nicht
+      erschienen. Eigene Cron-Jobs (Missionsanleitungen 7, Hacks & Tricks
+      9, Tipps 11 Uhr UTC, siehe `vercel.json`). Details siehe eigener
+      Abschnitt unten.
 
 ## Schritt 4 – Online stellen (Schritt für Schritt)
 
@@ -299,53 +301,60 @@ Für lokale Tests wurde in `.env.local` bereits ein zufälliges
 noch ergänzt werden, bevor `npm run news:fetch` (ohne `:dry`) echte Artikel
 erzeugt.
 
-## Schritt 5 – Missionsanleitungen-Workflow (Details)
+## Schritt 5 – Missionsanleitungen, Hacks & Tricks, Tipps (Details)
 
-**Warum Vorschauen statt Anleitungen:** GTA 6 ist noch nicht erschienen, es
-gibt also keine echten Missions-Walkthroughs. Statt etwas zu erfinden,
-fasst der Workflow zusammen, was seriöse Quellen bereits zu Missionen,
-Story und Charakteren verraten haben – klar als Vorschau gekennzeichnet.
-Sobald das Spiel da ist, kann daraus (manuell oder mit einem neuen Prompt)
-eine echte Schritt-für-Schritt-Anleitung werden.
+**Warum Vorschauen/Einschätzungen statt fertiger Inhalte:** GTA 6 ist noch
+nicht erschienen, es gibt also weder echte Missions-Walkthroughs noch
+getestete Hacks. Statt etwas zu erfinden, fassen diese drei Workflows
+zusammen, was seriöse Quellen bereits verraten haben – klar als
+Vorschau/Einschätzung gekennzeichnet. Sobald das Spiel da ist, kann daraus
+(manuell oder mit einem neuen Prompt) echter Anleitungs-Content werden.
 
-**Wie es funktioniert:** identisch zum News-Workflow (siehe oben), mit zwei
-Unterschieden:
-1. `scripts/fetch-guides.mjs` / `src/lib/guide-pipeline.ts` filtern
-   zusätzlich auf Missions-/Story-Schlagworte (`mission`, `heist`, `story`,
-   `protagonist`, `jason`, `lucia`, …) – nicht jeder GTA-6-Artikel landet
-   hier.
-2. Der Claude-Prompt verlangt ausdrücklich eine **Vorschau**, keine
-   Schritt-für-Schritt-Anleitung, und verbietet das Erfinden von
-   Missionsschritten oder Spielmechaniken, die nicht in der Quelle stehen.
-3. Ergebnis landet als `content/missionsanleitungen/<slug>.json`, Freigabe
-   unter `/admin/missionsanleitungen` (gleiches `ADMIN_PASSWORD`), danach
-   sichtbar auf `/missionsanleitungen`.
+**Wie es funktioniert:** identisch zum News-Workflow (siehe oben,
+RSS → Claude API → Entwurf → Freigabe), aber jeder Bereich hat eigene
+Schlagwörter, einen eigenen Prompt (der explizit nichts erfinden darf,
+was nicht in der Quelle steht) und eigene Tags:
 
-**Lokal ausführen:**
+| Bereich | Lib/Pipeline | Zusätzliche Schlagwörter | Tags | Admin | Cron (UTC) |
+|---|---|---|---|---|---|
+| Missionsanleitungen | `guides.ts` / `guide-pipeline.ts` | mission, heist, story, protagonist, jason, lucia, … | Hauptmission, Nebenmission, Gameplay, Sonstiges | `/admin/missionsanleitungen` | 7 Uhr |
+| Hacks & Tricks | `hacks.ts` / `hacks-pipeline.ts` | gameplay, map, economy, weapon, vehicle, cover, … | Bewegung, Wirtschaft, Kampf, Sonstiges | `/admin/hacks-und-tricks` | 9 Uhr |
+| Tipps | `tipps.ts` / `tipps-pipeline.ts` | platform, pre-order, price, requirements, beginner, … | Technik, Vorbestellung, Einsteiger, Sonstiges | `/admin/tipps` | 11 Uhr |
+
+Jeder Treffer muss zusätzlich eines der GTA-6-Schlagwörter aus dem
+News-Workflow enthalten (UND-Verknüpfung) – nicht jeder GTA-6-Artikel
+landet also in jedem Bereich.
+
+**Lokal ausführen** (analog für `guides`, `hacks`, `tipps`):
 
 ```bash
 npm --prefix Projects/leonida-living run guides:fetch:dry
-npm --prefix Projects/leonida-living run guides:fetch
+npm --prefix Projects/leonida-living run hacks:fetch:dry
+npm --prefix Projects/leonida-living run tipps:fetch:dry
+# ohne :dry für echte Entwürfe (braucht ANTHROPIC_API_KEY)
 ```
 
-**Cron:** eigener Vercel-Cron-Job auf `/api/cron/fetch-guides`, 7 Uhr UTC
-(eine Stunde nach dem News-Cron, siehe `vercel.json`) – nutzt dieselben
-Umgebungsvariablen wie News (`ANTHROPIC_API_KEY`, `CRON_SECRET`,
-`GITHUB_TOKEN`/`GITHUB_REPO`/`GITHUB_BRANCH`).
+**Cron:** je ein eigener Vercel-Cron-Job (siehe Tabelle oben und
+`vercel.json`), gestaffelt nach News (5 Uhr), damit nicht alle vier
+gleichzeitig laufen – nutzt dieselben Umgebungsvariablen wie News
+(`ANTHROPIC_API_KEY`, `CRON_SECRET`, `GITHUB_TOKEN`/`GITHUB_REPO`/
+`GITHUB_BRANCH`).
 
 ## Täglicher Start
 
-Sobald die Seite online ist (siehe Schritt 4), laufen News- und
-Missionsanleitungen-Workflow von selbst (je einmal täglich per Vercel
-Cron, 5 bzw. 7 Uhr UTC). Dein täglicher Ablauf:
+Sobald die Seite online ist (siehe Schritt 4), laufen alle vier Workflows
+von selbst (je einmal täglich per Vercel Cron, siehe Zeiten oben). Dein
+täglicher Ablauf:
 
-1. **Entwürfe freigeben:** `https://<deine-domain>/admin/news` und
-   `https://<deine-domain>/admin/missionsanleitungen` öffnen (beide mit
-   demselben `ADMIN_PASSWORD`, zwischen beiden Bereichen kann oben
-   gewechselt werden), neue Entwürfe lesen und mit "Freigeben" oder
-   "Verwerfen" entscheiden. Das ist der einzige wiederkehrende Handgriff.
-2. **Gelegentlich reinschauen:** `/news` und `/missionsanleitungen` auf der
-   Live-Seite, ob alles wie gewünscht aussieht.
+1. **Entwürfe freigeben:** `/admin/news`, `/admin/missionsanleitungen`,
+   `/admin/hacks-und-tricks` und `/admin/tipps` auf deiner Domain öffnen
+   (alle mit demselben `ADMIN_PASSWORD`, oben an jeder Seite kann zwischen
+   allen vier Bereichen gewechselt werden), neue Entwürfe lesen und mit
+   "Freigeben" oder "Verwerfen" entscheiden. Das ist der einzige
+   wiederkehrende Handgriff.
+2. **Gelegentlich reinschauen:** `/news`, `/missionsanleitungen`,
+   `/hacks-und-tricks` und `/tipps` auf der Live-Seite, ob alles wie
+   gewünscht aussieht.
 3. **Bei Bedarf weiterentwickeln:** einfach in diesem Chat weitermachen,
    z. B. "füge eine echte Mission hinzu" oder "jetzt Stripe einbauen".
 

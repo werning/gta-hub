@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getDraftGuides } from "@/lib/guides";
 import { isAdminAuthenticated } from "@/lib/admin-auth";
 import { approveGuide, logout, rejectGuide } from "../actions";
 import { SubmitButton } from "@/components/SubmitButton";
+import { AdminNav } from "@/components/AdminNav";
 
 export const metadata: Metadata = {
   title: "Missionsanleitungen freigeben",
@@ -23,15 +23,10 @@ export default async function AdminMissionsanleitungenPage() {
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6">
+      <AdminNav current="/admin/missionsanleitungen" />
       <div className="mb-10 flex items-center justify-between">
         <div>
-          <Link
-            href="/admin/news"
-            className="text-sm text-white/50 hover:text-white"
-          >
-            ← News freigeben
-          </Link>
-          <h1 className="mt-2 text-3xl font-bold text-white">
+          <h1 className="text-3xl font-bold text-white">
             Missionsanleitungen freigeben
           </h1>
           <p className="mt-2 text-white/60">

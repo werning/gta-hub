@@ -10,7 +10,11 @@
     "news:fetch": "node --env-file-if-exists=.env.local scripts/fetch-news.mjs",
     "news:fetch:dry": "node --env-file-if-exists=.env.local scripts/fetch-news.mjs --dry-run",
     "guides:fetch": "node --env-file-if-exists=.env.local scripts/fetch-guides.mjs",
-    "guides:fetch:dry": "node --env-file-if-exists=.env.local scripts/fetch-guides.mjs --dry-run"
+    "guides:fetch:dry": "node --env-file-if-exists=.env.local scripts/fetch-guides.mjs --dry-run",
+    "hacks:fetch": "node --env-file-if-exists=.env.local scripts/fetch-hacks.mjs",
+    "hacks:fetch:dry": "node --env-file-if-exists=.env.local scripts/fetch-hacks.mjs --dry-run",
+    "tipps:fetch": "node --env-file-if-exists=.env.local scripts/fetch-tipps.mjs",
+    "tipps:fetch:dry": "node --env-file-if-exists=.env.local scripts/fetch-tipps.mjs --dry-run"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^1.10.0",

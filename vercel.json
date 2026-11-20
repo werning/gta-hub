@@ -7,6 +7,14 @@
     {
       "path": "/api/cron/fetch-guides",
       "schedule": "0 7 * * *"
+    },
+    {
+      "path": "/api/cron/fetch-hacks",
+      "schedule": "0 9 * * *"
+    },
+    {
+      "path": "/api/cron/fetch-tipps",
+      "schedule": "0 11 * * *"
     }
   ]
 }

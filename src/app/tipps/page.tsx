@@ -1,39 +1,17 @@
 import type { Metadata } from "next";
 import { ContentCard } from "@/components/ContentCard";
 import { PlaceholderNotice } from "@/components/PlaceholderNotice";
+import { getPublishedTipps } from "@/lib/tipps";
 
 export const metadata: Metadata = {
   title: "Tipps",
-  description: "Praktische Tipps rund um GTA 6 – verständlich erklärt.",
+  description:
+    "Praktische Tipps rund um GTA 6 aus seriösen Quellen – verständlich erklärt.",
 };
 
-const items = [
-  {
-    href: "/tipps",
-    tag: "Technik",
-    title: "Beispiel: Welche Plattform passt zu dir?",
-    excerpt:
-      "Ein Vergleich der angekündigten Plattformen und was das für dich bedeutet.",
-    meta: "Platzhalter",
-  },
-  {
-    href: "/tipps",
-    tag: "Vorbestellung",
-    title: "Beispiel: Lohnt sich eine Vorbestellung?",
-    excerpt: "Vor- und Nachteile einfach erklärt, ohne Kaufdruck.",
-    meta: "Platzhalter",
-  },
-  {
-    href: "/tipps",
-    tag: "Einsteiger",
-    title: "Beispiel: So bereitest du dich als Einsteiger vor",
-    excerpt:
-      "Grundlagen für alle, die neu in der GTA-Reihe sind oder lange pausiert haben.",
-    meta: "Platzhalter",
-  },
-];
-
 export default function TippsPage() {
+  const tipps = getPublishedTipps();
+
   return (
     <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
       <header className="mb-10">
@@ -44,16 +22,27 @@ export default function TippsPage() {
         </p>
       </header>
 
-      <PlaceholderNotice>
-        Platzhalterinhalte. Werden laufend durch echte Tipps ersetzt und
-        ergänzt.
-      </PlaceholderNotice>
-
-      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {items.map((item, i) => (
-          <ContentCard key={i} {...item} />
-        ))}
-      </div>
+      {tipps.length === 0 ? (
+        <PlaceholderNotice>
+          Noch keine freigegebenen Einträge. Der tägliche Workflow legt
+          Entwürfe an, die zuerst unter{" "}
+          <code className="text-white/80">/admin/tipps</code> freigegeben
+          werden müssen.
+        </PlaceholderNotice>
+      ) : (
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {tipps.map((tipp) => (
+            <ContentCard
+              key={tipp.slug}
+              href={`/tipps/${tipp.slug}`}
+              tag={tipp.tag}
+              title={tipp.title}
+              excerpt={tipp.excerpt}
+              meta={`Quelle: ${tipp.sourceName}`}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 }
