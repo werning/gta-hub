@@ -204,6 +204,37 @@ Vor dem Teilen des Links öffentlich: in `/impressum` und `/datenschutz`
 alle `[Platzhalter in eckigen Klammern]` durch echte Angaben ersetzen
 (siehe Hinweisbox jeweils oben auf der Seite).
 
+### 7. Bei Suchmaschinen anmelden (für Traffic)
+
+`robots.txt` und `sitemap.xml` sind bereits vorhanden und werden von
+Next.js automatisch erzeugt. Fehlt nur noch die Anmeldung bei den
+Suchmaschinen-Tools selbst:
+
+**Google Search Console** (https://search.google.com/search-console):
+1. Mit Google-Account anmelden, "Property hinzufügen" → "URL-Präfix" →
+   die Live-Adresse eintragen (z. B. `https://gta-hub-psi.vercel.app`
+   oder die eigene Domain, sobald eingerichtet).
+2. Verifizierungsmethode **"HTML-Tag"** wählen, den angezeigten Code
+   (nur der Wert aus `content="..."`) kopieren.
+3. In Vercel als Umgebungsvariable `GOOGLE_SITE_VERIFICATION` eintragen,
+   redeployen, dann bei Google auf "Verifizieren" klicken.
+4. Unter "Sitemaps" (linkes Menü) `sitemap.xml` eintragen und senden.
+
+**Bing Webmaster Tools** (https://www.bing.com/webmasters):
+1. Mit Microsoft-Account anmelden.
+2. Einfachster Weg: "Von Google Search Console importieren" – übernimmt
+   Verifizierung und Sitemap automatisch, falls Google schon eingerichtet
+   ist.
+3. Alternativ manuell: Property hinzufügen, Verifizierungsmethode
+   "Meta-Tag", Code als `BING_SITE_VERIFICATION` in Vercel eintragen,
+   redeployen, verifizieren, Sitemap `sitemap.xml` einreichen.
+
+**Danach:** Indexierung dauert meist einige Tage bis Wochen. Über die
+URL-Prüfung in der Search Console lässt sich die Startseite und einzelne
+Artikel manuell zur Indexierung anmelden, was es oft beschleunigt.
+Echter Traffic kommt zusätzlich über Zeit, gute Inhalte und – optional –
+Verlinkung aus Communities/Foren.
+
 ## Schritt 3 – Täglicher News-Workflow (Details)
 
 **Wie es funktioniert:**
