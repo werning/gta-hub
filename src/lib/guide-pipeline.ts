@@ -24,7 +24,6 @@ const MISSION_KEYWORDS = [
   "mission",
   "heist",
   "campaign",
-  "quest",
   "walkthrough",
   "guide",
   "collectible",
@@ -35,7 +34,6 @@ const MISSION_KEYWORDS = [
   "100%",
   "trophy",
   "achievement",
-  "chapter",
 ];
 const MODEL = process.env.ANTHROPIC_MODEL || "claude-haiku-5-5";
 
