@@ -10,6 +10,8 @@ import path from "path";
 import {
   githubContentConfigured,
   githubDeleteFile,
+  githubGetFileContent,
+  githubListJsonFiles,
   githubPutFile,
 } from "./github-content";
 
@@ -66,6 +68,30 @@ export function createContentStore<T extends ContentItem>(
     return readAll().filter((item) => item.status === "draft");
   }
 
+  // Für die Admin-Freigabeseiten: liest live über die GitHub-API statt aus
+  // dem lokalen Dateisystem. Grund: Online schreibt `save`/`setStatus`
+  // direkt ins GitHub-Repo, aber die laufende Vercel-Funktion hat weiterhin
+  // den alten Datei-Stand im eigenen Bundle (der ändert sich erst mit dem
+  // nächsten Deployment, das der Commit automatisch auslöst – das dauert
+  // 15-30 Sekunden). `readAll()`/`getDrafts()` zeigen in dieser Zeit also
+  // fälschlich noch den alten Stand, obwohl Freigeben/Verwerfen schon
+  // durchgelaufen ist – das sah für Admins wie ein Button aus, der erst
+  // nach mehreren Klicks reagiert. `getDraftsLive()` umgeht das, indem es
+  // den aktuellen Verzeichnisinhalt direkt von GitHub holt.
+  async function getDraftsLive(): Promise<T[]> {
+    if (!githubContentConfigured()) {
+      return getDrafts();
+    }
+    const files = await githubListJsonFiles(CONTENT_REPO_DIR);
+    const items = await Promise.all(
+      files.map((f) => githubGetFileContent(f.download_url))
+    );
+    return items
+      .map((json) => JSON.parse(json) as T)
+      .filter((item) => item.status === "draft")
+      .sort((a, b) => (a.publishedAt < b.publishedAt ? 1 : -1));
+  }
+
   function getBySlug(slug: string): T | undefined {
     return readAll().find((item) => item.slug === slug);
   }
@@ -118,5 +144,15 @@ export function createContentStore<T extends ContentItem>(
     }
   }
 
-  return { getAll, getPublished, getDrafts, getBySlug, getKnownSourceUrls, save, setStatus, remove };
+  return {
+    getAll,
+    getPublished,
+    getDrafts,
+    getDraftsLive,
+    getBySlug,
+    getKnownSourceUrls,
+    save,
+    setStatus,
+    remove,
+  };
 }

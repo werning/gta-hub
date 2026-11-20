@@ -8,6 +8,7 @@ const store = createContentStore<Tipp>("tipps", "tipps");
 export const getAllTipps = store.getAll;
 export const getPublishedTipps = store.getPublished;
 export const getDraftTipps = store.getDrafts;
+export const getDraftTippsLive = store.getDraftsLive;
 export const getTippBySlug = store.getBySlug;
 export const getKnownTippSourceUrls = store.getKnownSourceUrls;
 export const saveTipp = store.save;

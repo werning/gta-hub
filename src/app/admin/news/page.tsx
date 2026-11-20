@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
-import { getDraftArticles } from "@/lib/articles";
+import { getDraftArticlesLive } from "@/lib/articles";
 import { isAdminAuthenticated } from "@/lib/admin-auth";
 import { approveArticle, logout, rejectArticle } from "../actions";
 import { SubmitButton } from "@/components/SubmitButton";
@@ -19,7 +19,7 @@ export default async function AdminNewsPage() {
     redirect("/admin/login");
   }
 
-  const drafts = getDraftArticles();
+  const drafts = await getDraftArticlesLive();
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6">

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
-import { getDraftHacks } from "@/lib/hacks";
+import { getDraftHacksLive } from "@/lib/hacks";
 import { isAdminAuthenticated } from "@/lib/admin-auth";
 import { approveHack, logout, rejectHack } from "../actions";
 import { SubmitButton } from "@/components/SubmitButton";
@@ -19,7 +19,7 @@ export default async function AdminHacksPage() {
     redirect("/admin/login");
   }
 
-  const drafts = getDraftHacks();
+  const drafts = await getDraftHacksLive();
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6">

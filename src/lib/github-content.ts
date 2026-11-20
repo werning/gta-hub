@@ -55,6 +55,22 @@ export async function githubPutFile(
   });
 }
 
+export async function githubListJsonFiles(
+  repoDir: string
+): Promise<{ name: string; download_url: string }[]> {
+  const repo = process.env.GITHUB_REPO;
+  const branch = process.env.GITHUB_BRANCH || "main";
+  const res = await githubRequest(`/repos/${repo}/contents/${repoDir}?ref=${branch}`);
+  if (res.status === 404) return [];
+  const data = (await res.json()) as { name: string; download_url: string }[];
+  return data.filter((f) => f.name.endsWith(".json") && !f.name.startsWith("_"));
+}
+
+export async function githubGetFileContent(downloadUrl: string): Promise<string> {
+  const res = await fetch(downloadUrl, { cache: "no-store" });
+  return res.text();
+}
+
 export async function githubDeleteFile(repoPath: string, message: string) {
   const branch = process.env.GITHUB_BRANCH || "main";
   const sha = await getFileSha(repoPath, branch);

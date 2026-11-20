@@ -8,6 +8,7 @@ const store = createContentStore<Hack>("hacks-und-tricks", "hacks");
 export const getAllHacks = store.getAll;
 export const getPublishedHacks = store.getPublished;
 export const getDraftHacks = store.getDrafts;
+export const getDraftHacksLive = store.getDraftsLive;
 export const getHackBySlug = store.getBySlug;
 export const getKnownHackSourceUrls = store.getKnownSourceUrls;
 export const saveHack = store.save;

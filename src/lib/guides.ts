@@ -8,6 +8,7 @@ const store = createContentStore<Guide>("missionsanleitungen", "guides");
 export const getAllGuides = store.getAll;
 export const getPublishedGuides = store.getPublished;
 export const getDraftGuides = store.getDrafts;
+export const getDraftGuidesLive = store.getDraftsLive;
 export const getGuideBySlug = store.getBySlug;
 export const getKnownGuideSourceUrls = store.getKnownSourceUrls;
 export const saveGuide = store.save;

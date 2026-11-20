@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
-import { getDraftGuides } from "@/lib/guides";
+import { getDraftGuidesLive } from "@/lib/guides";
 import { isAdminAuthenticated } from "@/lib/admin-auth";
 import { approveGuide, logout, rejectGuide } from "../actions";
 import { SubmitButton } from "@/components/SubmitButton";
@@ -19,7 +19,7 @@ export default async function AdminMissionsanleitungenPage() {
     redirect("/admin/login");
   }
 
-  const drafts = getDraftGuides();
+  const drafts = await getDraftGuidesLive();
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6">

@@ -8,6 +8,7 @@ const store = createContentStore<Article>("news", "news");
 export const getAllArticles = store.getAll;
 export const getPublishedArticles = store.getPublished;
 export const getDraftArticles = store.getDrafts;
+export const getDraftArticlesLive = store.getDraftsLive;
 export const getArticleBySlug = store.getBySlug;
 export const getKnownSourceUrls = store.getKnownSourceUrls;
 export const saveArticle = store.save;
