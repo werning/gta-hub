@@ -244,14 +244,18 @@ Suchmaschinen-Tools selbst:
    redeployen, dann bei Google auf "Verifizieren" klicken.
 4. Unter "Sitemaps" (linkes Menü) `sitemap.xml` eintragen und senden.
 
-**Wichtig seit Umstieg auf die eigene Domain (20.11.2026):** Die bisherige
-`GOOGLE_SITE_VERIFICATION` war für die `gta-hub-psi.vercel.app`-Property
-eingerichtet. Eine URL-Präfix-Property gilt nur für genau diese Adresse –
-für `https://www.leonida-living.de` muss daher eine **neue Property**
-angelegt werden (am besten gleich als **Domain-Property** für
-`leonida-living.de`, dann sind http/https/www/non-www automatisch
-abgedeckt; Verifizierung läuft dabei über einen TXT-Eintrag bei INWX statt
-über das HTML-Tag). Noch nicht gemacht – steht als nächster Schritt an.
+**Seit Umstieg auf die eigene Domain (20.11.2026) erledigt:** Die alte
+`GOOGLE_SITE_VERIFICATION` galt nur für die `gta-hub-psi.vercel.app`-
+Property (URL-Präfix). Für `leonida-living.de` wurde zusätzlich eine
+**Domain-Property** angelegt (deckt http/https/www/non-www automatisch
+ab). Verifizierung lief über einen TXT-Eintrag bei INWX:
+`google-site-verification=4q0zWfbTMhJZGWKTUCgwKlqIMhJlVGtHwRBmjueAV7U`
+auf der Domain-Wurzel (`@`) – **diesen TXT-Eintrag nicht löschen**, sonst
+verliert die Property ihre Bestätigung. Sitemap
+`https://www.leonida-living.de/sitemap.xml` ist eingereicht und wurde
+sofort erfolgreich gelesen (24 Seiten erkannt). Die alte
+`gta-hub-psi.vercel.app`-Property bleibt parallel bestehen, muss aber
+nicht gepflegt werden.
 
 **Bing Webmaster Tools** (https://www.bing.com/webmasters):
 1. Mit Microsoft-Account anmelden.
