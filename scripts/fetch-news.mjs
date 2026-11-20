@@ -19,7 +19,7 @@ const CONTENT_DIR = path.join(ROOT, "content", "news");
 const FEEDS_FILE = path.join(CONTENT_DIR, "_feeds.json");
 
 const DRY_RUN = process.argv.includes("--dry-run");
-const MAX_NEW_ARTICLES_PER_RUN = 5;
+const MAX_NEW_ARTICLES_PER_RUN = 10;
 const KEYWORDS = ["gta 6", "gta vi", "grand theft auto 6", "grand theft auto vi"];
 const MODEL = process.env.ANTHROPIC_MODEL || "claude-haiku-5-5";
 

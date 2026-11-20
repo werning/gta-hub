@@ -262,10 +262,20 @@ Verlinkung aus Communities/Foren.
 
 **Wie es funktioniert:**
 1. `scripts/fetch-news.mjs` liest die RSS-Feeds aus `content/news/_feeds.json`
-   (aktuell: GameSpot, PC Gamer, Eurogamer, Rock Paper Shotgun).
+   (aktuell 12 Quellen: GameSpot, PC Gamer, Eurogamer, Rock Paper Shotgun,
+   IGN, PCGamesN, VG247, Dexerto, Polygon sowie die deutschen Seiten
+   PCGames.de, GamePro.de und 4Players.de). Eigene Quellen lassen sich
+   jederzeit ergänzen, indem man `{ "name": ..., "url": ... }` mit einer
+   gültigen RSS/Atom-Feed-URL in die Datei einträgt (für alle vier Bereiche
+   separat, da jeder sein eigenes `_feeds.json` hat). Die Rockstar-Games-
+   Newswire selbst bietet keinen öffentlichen RSS-Feed und kann deshalb
+   nicht automatisch eingebunden werden.
 2. Einträge werden auf GTA-6-Bezug gefiltert und mit bereits vorhandenen
    Artikeln abgeglichen (keine Duplikate).
-3. Pro Lauf werden maximal 5 neue Artikel verarbeitet (Kostenschutz).
+3. Pro Lauf werden maximal 10 neue Artikel verarbeitet (Kostenschutz,
+   zugleich Obergrenze für Vercels 60-Sekunden-Zeitlimit auf dem
+   Free-Tier – bei vielen Treffern an einem Tag kann es daher auch mal
+   weniger als 10 werden; der Rest folgt dann im nächsten Lauf).
 4. Jeder Artikel wird über die Claude API (Modell `claude-haiku-5-5`) in
    eigenen deutschen Worten zusammengefasst – strikte Anweisung: nichts
    erfinden, nichts wörtlich kopieren, Quelle bleibt immer verlinkt.

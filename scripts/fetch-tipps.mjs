@@ -21,7 +21,7 @@ const CONTENT_DIR = path.join(ROOT, "content", "tipps");
 const FEEDS_FILE = path.join(CONTENT_DIR, "_feeds.json");
 
 const DRY_RUN = process.argv.includes("--dry-run");
-const MAX_NEW_PER_RUN = 5;
+const MAX_NEW_PER_RUN = 10;
 const GTA_KEYWORDS = ["gta 6", "gta vi", "grand theft auto 6", "grand theft auto vi"];
 const TIPP_KEYWORDS = [
   "platform",

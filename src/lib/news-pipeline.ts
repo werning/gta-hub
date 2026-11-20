@@ -10,7 +10,7 @@ import Anthropic from "@anthropic-ai/sdk";
 import { getAllArticles, saveArticle, type Article } from "./articles";
 
 const FEEDS_FILE = path.join(process.cwd(), "content", "news", "_feeds.json");
-const MAX_NEW_ARTICLES_PER_RUN = 5;
+const MAX_NEW_ARTICLES_PER_RUN = 10;
 const KEYWORDS = ["gta 6", "gta vi", "grand theft auto 6", "grand theft auto vi"];
 const MODEL = process.env.ANTHROPIC_MODEL || "claude-haiku-5-5";
 

@@ -15,7 +15,7 @@ import Anthropic from "@anthropic-ai/sdk";
 import { getAllTipps, saveTipp, type Tipp } from "./tipps";
 
 const FEEDS_FILE = path.join(process.cwd(), "content", "tipps", "_feeds.json");
-const MAX_NEW_PER_RUN = 5;
+const MAX_NEW_PER_RUN = 10;
 const GTA_KEYWORDS = ["gta 6", "gta vi", "grand theft auto 6", "grand theft auto vi"];
 const TIPP_KEYWORDS = [
   "platform",

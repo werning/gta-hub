@@ -15,7 +15,7 @@ import Anthropic from "@anthropic-ai/sdk";
 import { getAllHacks, saveHack, type Hack } from "./hacks";
 
 const FEEDS_FILE = path.join(process.cwd(), "content", "hacks-und-tricks", "_feeds.json");
-const MAX_NEW_PER_RUN = 5;
+const MAX_NEW_PER_RUN = 10;
 const GTA_KEYWORDS = ["gta 6", "gta vi", "grand theft auto 6", "grand theft auto vi"];
 const HACK_KEYWORDS = [
   "gameplay",

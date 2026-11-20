@@ -2,5 +2,13 @@
   { "name": "GameSpot", "url": "https://www.gamespot.com/feeds/mashup/" },
   { "name": "PC Gamer", "url": "https://www.pcgamer.com/rss/" },
   { "name": "Eurogamer", "url": "https://www.eurogamer.net/feed" },
-  { "name": "Rock Paper Shotgun", "url": "https://www.rockpapershotgun.com/feed" }
+  { "name": "Rock Paper Shotgun", "url": "https://www.rockpapershotgun.com/feed" },
+  { "name": "IGN", "url": "https://www.ign.com/rss/v2/articles/feed" },
+  { "name": "PCGamesN", "url": "https://pcgamesn.com/mainrss.xml" },
+  { "name": "VG247", "url": "https://www.vg247.com/feed/news" },
+  { "name": "Dexerto", "url": "https://www.dexerto.com/feed" },
+  { "name": "Polygon", "url": "https://www.polygon.com/rss/index.xml" },
+  { "name": "PCGames.de", "url": "https://www.pcgames.de/feed.cfm?menu_alias=home/" },
+  { "name": "GamePro.de", "url": "https://www.gamepro.de/rss/gpnews.rss" },
+  { "name": "4Players.de", "url": "https://www.4players.de/feed" }
 ]

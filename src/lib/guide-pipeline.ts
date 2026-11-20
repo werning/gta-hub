@@ -15,7 +15,7 @@ import Anthropic from "@anthropic-ai/sdk";
 import { getAllGuides, saveGuide, type Guide } from "./guides";
 
 const FEEDS_FILE = path.join(process.cwd(), "content", "missionsanleitungen", "_feeds.json");
-const MAX_NEW_GUIDES_PER_RUN = 5;
+const MAX_NEW_GUIDES_PER_RUN = 10;
 const GTA_KEYWORDS = ["gta 6", "gta vi", "grand theft auto 6", "grand theft auto vi"];
 const MISSION_KEYWORDS = [
   "mission",
