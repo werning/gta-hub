@@ -24,6 +24,12 @@ export const metadata: Metadata = {
   },
   description:
     "News, Hacks, Tipps, Missionsanleitungen und eine interaktive Karte rund um GTA 6 – von Fans für Fans.",
+  verification: {
+    google: process.env.GOOGLE_SITE_VERIFICATION,
+    other: process.env.BING_SITE_VERIFICATION
+      ? { "msvalidate.01": process.env.BING_SITE_VERIFICATION }
+      : undefined,
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
