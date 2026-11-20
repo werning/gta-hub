@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { ContentCard } from "@/components/ContentCard";
-import { PlaceholderNotice } from "@/components/PlaceholderNotice";
 import { getPublishedGuides } from "@/lib/guides";
 
 export const metadata: Metadata = {
@@ -29,27 +28,18 @@ export default function MissionsanleitungenPage() {
         </p>
       </header>
 
-      {guides.length === 0 ? (
-        <PlaceholderNotice>
-          Noch keine freigegebenen Einträge. Der tägliche Workflow legt
-          Entwürfe an, die zuerst unter{" "}
-          <code className="text-white/80">/admin/missionsanleitungen</code>{" "}
-          freigegeben werden müssen.
-        </PlaceholderNotice>
-      ) : (
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {guides.map((guide) => (
-            <ContentCard
-              key={guide.slug}
-              href={`/missionsanleitungen/${guide.slug}`}
-              tag={guide.tag}
-              title={guide.title}
-              excerpt={guide.excerpt}
-              meta={`Quelle: ${guide.sourceName}`}
-            />
-          ))}
-        </div>
-      )}
+      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {guides.map((guide) => (
+          <ContentCard
+            key={guide.slug}
+            href={`/missionsanleitungen/${guide.slug}`}
+            tag={guide.tag}
+            title={guide.title}
+            excerpt={guide.excerpt}
+            meta={`Quelle: ${guide.sourceName}`}
+          />
+        ))}
+      </div>
     </div>
   );
 }
