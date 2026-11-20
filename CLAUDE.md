@@ -4,10 +4,12 @@ GTA-6-Community-Hub. Inoffizielle Fan-Seite, **nicht** verbunden mit Rockstar
 Games oder Take-Two Interactive. Keine Rockstar-Logos, -Bilder oder -Videos –
 nur eigene Texte und eigene Grafiken.
 
-**Live:** https://gta-hub-psi.vercel.app
+**Live:** https://www.leonida-living.de (eigene Domain, siehe Abschnitt 5
+unten; https://gta-hub-psi.vercel.app funktioniert weiterhin und zeigt
+denselben Inhalt)
 **GitHub:** https://github.com/werning/gta-hub
 **Vercel-Projekt:** https://vercel.com/werning/gta-hub
-**Admin-Login:** https://gta-hub-psi.vercel.app/admin/login (Passwort: siehe
+**Admin-Login:** https://www.leonida-living.de/admin/login (Passwort: siehe
 Vercel-Umgebungsvariable `ADMIN_PASSWORD`, wurde dir im Chat mitgeteilt –
 am besten zeitnah selbst ändern)
 
@@ -124,12 +126,12 @@ die Vorschau-Funktion gestartet (Konfiguration in
       Entwurf speichern, Freigabe-Oberfläche unter `/admin/news`. Lokal
       getestet und funktionsfähig, inkl. einem echten Beispielartikel.
 - [x] **Schritt 4 – Online stellen:** Seite ist live unter
-      https://gta-hub-psi.vercel.app, Code auf GitHub, alle sechs
+      https://www.leonida-living.de, Code auf GitHub, alle sechs
       Umgebungsvariablen in Vercel gesetzt, Cron-Job aktiv (News läuft
       täglich 5:00 Uhr UTC). Offen: Impressum/Datenschutz enthalten noch
       Platzhalter – echte Angaben (Name, Adresse, E-Mail) selbst eintragen,
-      bevor der Link breit geteilt wird. Eigene Domain optional, siehe
-      Abschnitt 5 unten.
+      bevor der Link breit geteilt wird. Eigene Domain ist seit 20.11.2026
+      eingerichtet, siehe Abschnitt 5 unten.
 - [x] **Schritt 5 – Missionsanleitungen, Hacks & Tricks, Tipps:** alle drei
       nach demselben Prinzip wie der News-Workflow (RSS → Claude API →
       Entwurf → Freigabe unter `/admin/<bereich>`), aber jeweils mit
@@ -196,31 +198,30 @@ Live-Seite Artikel speichern können (siehe Erklärung oben bei Schritt 3):
 4. Token erzeugen, in Vercel als `GITHUB_TOKEN` eintragen (siehe oben) und
    danach ein Redeploy auslösen (Vercel → Deployments → "Redeploy").
 
-### 5. Eigene Domain (optional, nicht kostenlos)
-Die `*.vercel.app`-Adresse ist dauerhaft kostenlos. Eine eigene Domain
-(z. B. `leonida-living.de`) kostet bei einem Registrar meist 10–15 €/Jahr.
-Das Hosting selbst bleibt Vercel (Cron-Job, Freigabe-Workflow etc.
-funktionieren nur dort wie eingerichtet) – es wird nur die Adresse
-ausgetauscht.
+### 5. Eigene Domain (erledigt, 20.11.2026)
+`leonida-living.de` wurde bei INWX registriert (5,97 € im 1. Jahr, danach
+4,65 €/Jahr) und ist mit dem Vercel-Projekt verbunden:
 
-1. **Domain kaufen** bei einem Registrar, z. B. IONOS, Namecheap, INWX
-   oder Porkbun. Empfehlenswert: `.de` für eine deutsche Zielgruppe, oder
-   eine themenpassende `.com`/`.gg`.
-2. In Vercel: Projekt **gta-hub** → **Settings** → **Domains** → Domain
-   eingeben → "Add". Vercel zeigt dir die nötigen DNS-Einträge an
-   (meist ein **A-Eintrag** für die nackte Domain und ein **CNAME** für
-   `www`, Ziel jeweils von Vercel vorgegeben).
-3. Diese Einträge beim Registrar in der DNS-Verwaltung eintragen (Name
-   und Wert exakt wie von Vercel angezeigt übernehmen).
-4. Warten, bis Vercel die Domain als "Valid Configuration" anzeigt
-   (DNS-Ausbreitung dauert meist Minuten bis wenige Stunden). SSL-Zertifikat
-   wird automatisch und kostenlos eingerichtet.
-5. `NEXT_PUBLIC_SITE_URL` in den Vercel-Umgebungsvariablen auf die neue
-   Domain ändern (z. B. `https://leonida-living.de`) und einmal
-   redeployen.
-6. Optional: die alte `*.vercel.app`-Adresse in Vercel unter Domains auf
-   "Redirect to" die neue Domain stellen, damit alte Links weiterhin
-   funktionieren.
+- In Vercel unter **Settings → Domains** eingetragen: `leonida-living.de`
+  (leitet mit 308 auf `www` weiter) und `www.leonida-living.de`
+  (Production). Beide zeigen "Valid Configuration", SSL läuft automatisch
+  über Vercel.
+- DNS bei INWX (Nameserver-Verwaltung der Domain) gesetzt:
+  `A @ → 216.198.79.1` und `CNAME www → 59e9c7063c7b2587.vercel-dns-017.com.`
+  (die von Vercel vorgegebenen Werte – falls die Domain mal neu
+  verbunden werden muss, zeigt Vercel unter Domains → "View DNS
+  configuration" die jeweils aktuellen Werte).
+- `NEXT_PUBLIC_SITE_URL` in den Vercel-Umgebungsvariablen auf
+  `https://www.leonida-living.de` geändert und redeployed – `sitemap.xml`,
+  `robots.txt` und alle Metadaten (siehe [src/app/layout.tsx](src/app/layout.tsx))
+  nutzen jetzt automatisch die neue Domain.
+- Die alte Adresse `https://gta-hub-psi.vercel.app` bleibt als
+  Vercel-Domain bestehen und zeigt denselben Inhalt (kein Redirect
+  eingerichtet, falls irgendwo schon verlinkt).
+
+**Falls eine weitere Domain (z. B. `leonidaliving.de` ohne Bindestrich)
+dazukommen soll:** gleiches Vorgehen – bei INWX kaufen, in Vercel unter
+Domains hinzufügen, die angezeigten DNS-Werte bei INWX eintragen, fertig.
 
 ### 6. Rechtliches nicht vergessen
 Vor dem Teilen des Links öffentlich: in `/impressum` und `/datenschutz`
@@ -242,6 +243,15 @@ Suchmaschinen-Tools selbst:
 3. In Vercel als Umgebungsvariable `GOOGLE_SITE_VERIFICATION` eintragen,
    redeployen, dann bei Google auf "Verifizieren" klicken.
 4. Unter "Sitemaps" (linkes Menü) `sitemap.xml` eintragen und senden.
+
+**Wichtig seit Umstieg auf die eigene Domain (20.11.2026):** Die bisherige
+`GOOGLE_SITE_VERIFICATION` war für die `gta-hub-psi.vercel.app`-Property
+eingerichtet. Eine URL-Präfix-Property gilt nur für genau diese Adresse –
+für `https://www.leonida-living.de` muss daher eine **neue Property**
+angelegt werden (am besten gleich als **Domain-Property** für
+`leonida-living.de`, dann sind http/https/www/non-www automatisch
+abgedeckt; Verifizierung läuft dabei über einen TXT-Eintrag bei INWX statt
+über das HTML-Tag). Noch nicht gemacht – steht als nächster Schritt an.
 
 **Bing Webmaster Tools** (https://www.bing.com/webmasters):
 1. Mit Microsoft-Account anmelden.
