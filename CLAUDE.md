@@ -63,8 +63,8 @@ src/
     missionsanleitungen/page.tsx   alle vier: Vorschau-/Einschätzungsinhalte (Details unten)
     karte/page.tsx
     premium/page.tsx          "Launch-Phase"-Seite (aktuell kostenlos)
-    impressum/page.tsx        Platzhalter (echter Inhalt in Schritt 4)
-    datenschutz/page.tsx      Platzhalter (echter Inhalt in Schritt 4)
+    impressum/page.tsx        echte Angaben hinterlegt (seit 20.11.2026)
+    datenschutz/page.tsx      echte Angaben hinterlegt (seit 20.11.2026)
     news/[slug]/page.tsx       Detailseite je Content-Typ (ebenso für
     missionsanleitungen/[slug]/page.tsx   hacks-und-tricks und tipps)
     hacks-und-tricks/[slug]/page.tsx
@@ -128,10 +128,11 @@ die Vorschau-Funktion gestartet (Konfiguration in
 - [x] **Schritt 4 – Online stellen:** Seite ist live unter
       https://www.leonida-living.de, Code auf GitHub, alle sechs
       Umgebungsvariablen in Vercel gesetzt, Cron-Job aktiv (News läuft
-      täglich 5:00 Uhr UTC). Offen: Impressum/Datenschutz enthalten noch
-      Platzhalter – echte Angaben (Name, Adresse, E-Mail) selbst eintragen,
-      bevor der Link breit geteilt wird. Eigene Domain ist seit 20.11.2026
-      eingerichtet, siehe Abschnitt 5 unten.
+      täglich 5:00 Uhr UTC). Eigene Domain ist seit 20.11.2026 eingerichtet
+      (siehe Abschnitt 5 unten), Impressum und Datenschutzerklärung tragen
+      seit 20.11.2026 die echten Angaben des Betreibers. Offen: falls noch
+      nicht geschehen, `ADMIN_PASSWORD` zeitnah selbst in Vercel ändern
+      (ursprünglich im Chat mitgeteiltes Passwort).
 - [x] **Schritt 5 – Missionsanleitungen, Hacks & Tricks, Tipps:** alle drei
       nach demselben Prinzip wie der News-Workflow (RSS → Claude API →
       Entwurf → Freigabe unter `/admin/<bereich>`), aber jeweils mit
