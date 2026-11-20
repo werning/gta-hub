@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getDraftArticles } from "@/lib/articles";
 import { isAdminAuthenticated } from "@/lib/admin-auth";
@@ -24,7 +25,13 @@ export default async function AdminNewsPage() {
     <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6">
       <div className="mb-10 flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-white">Artikel freigeben</h1>
+          <Link
+            href="/admin/missionsanleitungen"
+            className="text-sm text-white/50 hover:text-white"
+          >
+            Missionsanleitungen freigeben →
+          </Link>
+          <h1 className="mt-2 text-3xl font-bold text-white">Artikel freigeben</h1>
           <p className="mt-2 text-white/60">
             {drafts.length === 0
               ? "Aktuell keine offenen Entwürfe."

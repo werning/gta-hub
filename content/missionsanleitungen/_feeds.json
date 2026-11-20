@@ -1,0 +1,6 @@
+[
+  { "name": "GameSpot", "url": "https://www.gamespot.com/feeds/mashup/" },
+  { "name": "PC Gamer", "url": "https://www.pcgamer.com/rss/" },
+  { "name": "Eurogamer", "url": "https://www.eurogamer.net/feed" },
+  { "name": "Rock Paper Shotgun", "url": "https://www.rockpapershotgun.com/feed" }
+]

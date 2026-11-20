@@ -8,7 +8,9 @@
     "start": "next start",
     "lint": "eslint",
     "news:fetch": "node --env-file-if-exists=.env.local scripts/fetch-news.mjs",
-    "news:fetch:dry": "node --env-file-if-exists=.env.local scripts/fetch-news.mjs --dry-run"
+    "news:fetch:dry": "node --env-file-if-exists=.env.local scripts/fetch-news.mjs --dry-run",
+    "guides:fetch": "node --env-file-if-exists=.env.local scripts/fetch-guides.mjs",
+    "guides:fetch:dry": "node --env-file-if-exists=.env.local scripts/fetch-guides.mjs --dry-run"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^1.10.0",

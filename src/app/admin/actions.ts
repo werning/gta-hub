@@ -4,6 +4,7 @@ import { cookies } from "next/headers";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { deleteArticle, setArticleStatus } from "@/lib/articles";
+import { deleteGuide, setGuideStatus } from "@/lib/guides";
 import { ADMIN_COOKIE, isAdminAuthenticated, sessionToken } from "@/lib/admin-auth";
 
 export async function login(formData: FormData) {
@@ -54,4 +55,18 @@ export async function rejectArticle(slug: string) {
   await requireAuth();
   await deleteArticle(slug);
   revalidatePath("/admin/news");
+}
+
+export async function approveGuide(slug: string) {
+  await requireAuth();
+  await setGuideStatus(slug, "published");
+  revalidatePath("/missionsanleitungen");
+  revalidatePath(`/missionsanleitungen/${slug}`);
+  revalidatePath("/admin/missionsanleitungen");
+}
+
+export async function rejectGuide(slug: string) {
+  await requireAuth();
+  await deleteGuide(slug);
+  revalidatePath("/admin/missionsanleitungen");
 }

@@ -1,0 +1,122 @@
+// Generische Basis für Content-Typen, die als einzelne JSON-Dateien in
+// einem Unterordner von content/ liegen (z. B. News, Missionsanleitungen):
+// Lesen/Sortieren, Entwurf/Freigabe-Status, Speichern/Löschen. Lokal wird
+// direkt auf die Festplatte geschrieben, online über die GitHub-API
+// (siehe github-content.ts), weil Vercel zur Laufzeit nicht dauerhaft
+// schreibbar ist.
+
+import { readFileSync, readdirSync, unlinkSync, writeFileSync } from "fs";
+import path from "path";
+import {
+  githubContentConfigured,
+  githubDeleteFile,
+  githubPutFile,
+} from "./github-content";
+
+export type ContentStatus = "draft" | "published";
+
+export type ContentItem = {
+  slug: string;
+  title: string;
+  excerpt: string;
+  paragraphs: string[];
+  tag: string;
+  sourceName: string;
+  sourceUrl: string;
+  publishedAt: string;
+  fetchedAt: string;
+  status: ContentStatus;
+};
+
+export function createContentStore<T extends ContentItem>(
+  folderName: string,
+  commitPrefix: string
+) {
+  const CONTENT_DIR = path.join(process.cwd(), "content", folderName);
+  const CONTENT_REPO_DIR = `content/${folderName}`;
+
+  function itemPath(slug: string) {
+    return path.join(CONTENT_DIR, `${slug}.json`);
+  }
+
+  function readAll(): T[] {
+    let files: string[] = [];
+    try {
+      files = readdirSync(CONTENT_DIR).filter(
+        (f) => f.endsWith(".json") && !f.startsWith("_")
+      );
+    } catch {
+      return [];
+    }
+
+    return files
+      .map((f) => JSON.parse(readFileSync(path.join(CONTENT_DIR, f), "utf-8")) as T)
+      .sort((a, b) => (a.publishedAt < b.publishedAt ? 1 : -1));
+  }
+
+  function getAll(): T[] {
+    return readAll();
+  }
+
+  function getPublished(): T[] {
+    return readAll().filter((item) => item.status === "published");
+  }
+
+  function getDrafts(): T[] {
+    return readAll().filter((item) => item.status === "draft");
+  }
+
+  function getBySlug(slug: string): T | undefined {
+    return readAll().find((item) => item.slug === slug);
+  }
+
+  function getKnownSourceUrls(): Set<string> {
+    return new Set(readAll().map((item) => item.sourceUrl));
+  }
+
+  async function save(item: T) {
+    const json = JSON.stringify(item, null, 2);
+    if (githubContentConfigured()) {
+      await githubPutFile(
+        `${CONTENT_REPO_DIR}/${item.slug}.json`,
+        json,
+        `${commitPrefix}: Entwurf "${item.title}"`
+      );
+    } else {
+      writeFileSync(itemPath(item.slug), json);
+    }
+  }
+
+  async function setStatus(slug: string, status: ContentStatus) {
+    const item = getBySlug(slug);
+    if (!item) return;
+    item.status = status;
+    const json = JSON.stringify(item, null, 2);
+    if (githubContentConfigured()) {
+      await githubPutFile(
+        `${CONTENT_REPO_DIR}/${slug}.json`,
+        json,
+        `${commitPrefix}: "${item.title}" -> ${status}`
+      );
+    } else {
+      writeFileSync(itemPath(slug), json);
+    }
+  }
+
+  async function remove(slug: string) {
+    if (githubContentConfigured()) {
+      await githubDeleteFile(
+        `${CONTENT_REPO_DIR}/${slug}.json`,
+        `${commitPrefix}: ${slug} entfernt`
+      );
+      return;
+    }
+    try {
+      unlinkSync(itemPath(slug));
+    } catch {
+      // already gone
+    }
+  }
+
+  return { getAll, getPublished, getDrafts, getBySlug, getKnownSourceUrls, save, setStatus, remove };
+}

@@ -58,17 +58,21 @@ src/
     news/page.tsx
     hacks-und-tricks/page.tsx
     tipps/page.tsx
-    missionsanleitungen/page.tsx   zeigt Vorschau/Paywall-Muster
+    missionsanleitungen/page.tsx   Vorschauen zu Missionen/Story (Details unten)
     karte/page.tsx
     premium/page.tsx          "Launch-Phase"-Seite (aktuell kostenlos)
     impressum/page.tsx        Platzhalter (echter Inhalt in Schritt 4)
     datenschutz/page.tsx      Platzhalter (echter Inhalt in Schritt 4)
     news/[slug]/page.tsx       Artikel-Detailseite
+    missionsanleitungen/[slug]/page.tsx   Detailseite einer Vorschau
+    api/cron/fetch-news/route.ts    Vercel-Cron-Endpunkt News
+    api/cron/fetch-guides/route.ts  Vercel-Cron-Endpunkt Missionsanleitungen
     admin/
       page.tsx                 Redirect je nach Login-Status
       login/page.tsx            Passwort-Login
-      news/page.tsx             Entwürfe freigeben/verwerfen
-      actions.ts                 Server Actions (login, logout, approve, reject)
+      news/page.tsx             News-Entwürfe freigeben/verwerfen
+      missionsanleitungen/page.tsx   Missionsanleitungen-Entwürfe freigeben/verwerfen
+      actions.ts                 Server Actions (login, logout, approve/reject je Typ)
   components/
     Header.tsx                Client Component, mobiles Menü
     Footer.tsx
@@ -78,14 +82,23 @@ src/
   lib/
     nav.ts                     Navigationspunkte, Site-Name
     site.ts                    Preis-/Launch-Konstanten
-    articles.ts                 Lesen/Schreiben von content/news/*.json
+    content-store.ts            generische Basis: lesen/schreiben/Status je Content-Ordner
+    articles.ts                 News, über content-store.ts (content/news/*.json)
+    guides.ts                   Missionsanleitungen, über content-store.ts (content/missionsanleitungen/*.json)
+    news-pipeline.ts            Produktions-Workflow News (für Cron-Route)
+    guide-pipeline.ts           Produktions-Workflow Missionsanleitungen (für Cron-Route)
+    github-content.ts           Commit/Delete von Content-Dateien über die GitHub-API (online)
     admin-auth.ts                Passwort-Session-Check für /admin
 content/
   news/
     _feeds.json                 Liste der RSS-Quellen
     <slug>.json                  ein Artikel (draft oder published)
+  missionsanleitungen/
+    _feeds.json                 Liste der RSS-Quellen (aktuell dieselben wie News)
+    <slug>.json                  eine Vorschau (draft oder published)
 scripts/
-  fetch-news.mjs                 täglicher News-Workflow (siehe unten)
+  fetch-news.mjs                 täglicher News-Workflow, lokal (siehe unten)
+  fetch-guides.mjs                täglicher Missionsanleitungen-Workflow, lokal (siehe unten)
 ```
 
 ## Lokal starten
@@ -112,11 +125,18 @@ die Vorschau-Funktion gestartet (Konfiguration in
       getestet und funktionsfähig, inkl. einem echten Beispielartikel.
 - [x] **Schritt 4 – Online stellen:** Seite ist live unter
       https://gta-hub-psi.vercel.app, Code auf GitHub, alle sechs
-      Umgebungsvariablen in Vercel gesetzt, Cron-Job aktiv (läuft ab morgen
-      täglich automatisch). Offen: Impressum/Datenschutz enthalten noch
+      Umgebungsvariablen in Vercel gesetzt, Cron-Job aktiv (News läuft
+      täglich 5 Uhr UTC). Offen: Impressum/Datenschutz enthalten noch
       Platzhalter – echte Angaben (Name, Adresse, E-Mail) selbst eintragen,
       bevor der Link breit geteilt wird. Eigene Domain optional, siehe
       Abschnitt 5 unten.
+- [x] **Schritt 5 – Missionsanleitungen-Workflow:** gleiches Prinzip wie der
+      News-Workflow (RSS → Claude API → Entwurf → Freigabe unter
+      `/admin/missionsanleitungen`), aber auf Missions-/Story-Schlagworte
+      gefiltert und als klar gekennzeichnete **Vorschau** formuliert, nicht
+      als fertiger Walkthrough – GTA 6 ist noch nicht erschienen, es gibt
+      also keine echten Spieldurchläufe. Eigener Cron-Job, 7 Uhr UTC (siehe
+      `vercel.json`). Details siehe eigener Abschnitt unten.
 
 ## Schritt 4 – Online stellen (Schritt für Schritt)
 
@@ -279,17 +299,53 @@ Für lokale Tests wurde in `.env.local` bereits ein zufälliges
 noch ergänzt werden, bevor `npm run news:fetch` (ohne `:dry`) echte Artikel
 erzeugt.
 
+## Schritt 5 – Missionsanleitungen-Workflow (Details)
+
+**Warum Vorschauen statt Anleitungen:** GTA 6 ist noch nicht erschienen, es
+gibt also keine echten Missions-Walkthroughs. Statt etwas zu erfinden,
+fasst der Workflow zusammen, was seriöse Quellen bereits zu Missionen,
+Story und Charakteren verraten haben – klar als Vorschau gekennzeichnet.
+Sobald das Spiel da ist, kann daraus (manuell oder mit einem neuen Prompt)
+eine echte Schritt-für-Schritt-Anleitung werden.
+
+**Wie es funktioniert:** identisch zum News-Workflow (siehe oben), mit zwei
+Unterschieden:
+1. `scripts/fetch-guides.mjs` / `src/lib/guide-pipeline.ts` filtern
+   zusätzlich auf Missions-/Story-Schlagworte (`mission`, `heist`, `story`,
+   `protagonist`, `jason`, `lucia`, …) – nicht jeder GTA-6-Artikel landet
+   hier.
+2. Der Claude-Prompt verlangt ausdrücklich eine **Vorschau**, keine
+   Schritt-für-Schritt-Anleitung, und verbietet das Erfinden von
+   Missionsschritten oder Spielmechaniken, die nicht in der Quelle stehen.
+3. Ergebnis landet als `content/missionsanleitungen/<slug>.json`, Freigabe
+   unter `/admin/missionsanleitungen` (gleiches `ADMIN_PASSWORD`), danach
+   sichtbar auf `/missionsanleitungen`.
+
+**Lokal ausführen:**
+
+```bash
+npm --prefix Projects/leonida-living run guides:fetch:dry
+npm --prefix Projects/leonida-living run guides:fetch
+```
+
+**Cron:** eigener Vercel-Cron-Job auf `/api/cron/fetch-guides`, 7 Uhr UTC
+(eine Stunde nach dem News-Cron, siehe `vercel.json`) – nutzt dieselben
+Umgebungsvariablen wie News (`ANTHROPIC_API_KEY`, `CRON_SECRET`,
+`GITHUB_TOKEN`/`GITHUB_REPO`/`GITHUB_BRANCH`).
+
 ## Täglicher Start
 
-Sobald die Seite online ist (siehe Schritt 4), läuft der News-Workflow von
-selbst (einmal täglich per Vercel Cron). Dein täglicher Ablauf:
+Sobald die Seite online ist (siehe Schritt 4), laufen News- und
+Missionsanleitungen-Workflow von selbst (je einmal täglich per Vercel
+Cron, 5 bzw. 7 Uhr UTC). Dein täglicher Ablauf:
 
-1. **Artikel freigeben:** `https://<deine-domain>/admin/news` öffnen, mit
-   deinem `ADMIN_PASSWORD` einloggen, neue Entwürfe lesen und mit
-   "Freigeben" oder "Verwerfen" entscheiden. Das ist der einzige
-   wiederkehrende Handgriff.
-2. **Gelegentlich reinschauen:** `/news` auf der Live-Seite, ob alles wie
-   gewünscht aussieht.
+1. **Entwürfe freigeben:** `https://<deine-domain>/admin/news` und
+   `https://<deine-domain>/admin/missionsanleitungen` öffnen (beide mit
+   demselben `ADMIN_PASSWORD`, zwischen beiden Bereichen kann oben
+   gewechselt werden), neue Entwürfe lesen und mit "Freigeben" oder
+   "Verwerfen" entscheiden. Das ist der einzige wiederkehrende Handgriff.
+2. **Gelegentlich reinschauen:** `/news` und `/missionsanleitungen` auf der
+   Live-Seite, ob alles wie gewünscht aussieht.
 3. **Bei Bedarf weiterentwickeln:** einfach in diesem Chat weitermachen,
    z. B. "füge eine echte Mission hinzu" oder "jetzt Stripe einbauen".
 
