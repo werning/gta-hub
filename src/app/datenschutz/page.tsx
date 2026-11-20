@@ -11,12 +11,11 @@ export default function DatenschutzPage() {
       <h1 className="text-3xl font-bold text-white">Datenschutzerklärung</h1>
 
       <div className="mt-6 rounded-xl border border-dashed border-[#ff8fc0]/40 bg-[#ff2e88]/5 px-4 py-3 text-sm text-white/70">
-        <strong className="text-white">Vorlage, kein Rechtsrat.</strong> Trage
-        deine Kontaktdaten ein und ergänze diesen Text, sobald weitere
-        Dienste dazukommen (z. B. Zahlungsanbieter, Login, Newsletter,
-        Statistik-Tools). Aktuell beschreibt diese Vorlage den Stand von
-        Leonida Living in der Launch-Phase: keine Zahlungen, keine
-        Nutzerkonten, keine Analyse-Tools.
+        <strong className="text-white">Vorlage, kein Rechtsrat.</strong> Diese
+        Vorlage beschreibt den aktuellen Stand von Leonida Living in der
+        Launch-Phase: keine Zahlungen, keine Nutzerkonten, keine
+        Analyse-Tools. Ergänze den Text, sobald weitere Dienste dazukommen
+        (z. B. Zahlungsanbieter, Login, Newsletter, Statistik-Tools).
       </div>
 
       <section className="mt-8 space-y-6 text-white/80">
@@ -25,13 +24,15 @@ export default function DatenschutzPage() {
             1. Verantwortlicher
           </h2>
           <p className="mt-2">
-            [Vor- und Nachname]
+            Thomas Werning
             <br />
-            [Straße und Hausnummer]
+            Am Floßgraben 2
             <br />
-            [Postleitzahl und Ort]
+            37276 Meinhard
             <br />
-            E-Mail: [deine-email@beispiel.de]
+            E-Mail: info@o4p.de
+            <br />
+            Telefon: 0174 9776596
           </p>
         </div>
 
@@ -40,18 +41,17 @@ export default function DatenschutzPage() {
             2. Hosting und Server-Logfiles
           </h2>
           <p className="mt-2">
-            Diese Seite wird bei [Hosting-Anbieter, z. B. Vercel Inc., 340 S
-            Lemon Ave #4133, Walnut, CA 91789, USA] gehostet. Beim Aufruf der
-            Seite verarbeitet der Hosting-Anbieter automatisch technische
-            Daten (u. a. IP-Adresse, Datum und Uhrzeit des Zugriffs,
-            aufgerufene Seite, verwendeter Browser) in sogenannten
-            Server-Logfiles. Diese Verarbeitung ist zum sicheren und
-            stabilen Betrieb der Seite erforderlich (Art. 6 Abs. 1 lit. f
-            DSGVO) und wird nach [übliche Aufbewahrungsdauer des Hosters
-            prüfen, oft wenige Tage bis Wochen] automatisch gelöscht. Falls
-            der Hosting-Anbieter seinen Sitz außerhalb der EU hat, prüfe die
-            von ihm angebotenen Garantien (z. B. EU-US Data Privacy
-            Framework oder Standardvertragsklauseln) und ergänze sie hier.
+            Diese Seite wird bei Vercel Inc., 340 S Lemon Ave #4133, Walnut,
+            CA 91789, USA gehostet. Beim Aufruf der Seite verarbeitet der
+            Hosting-Anbieter automatisch technische Daten (u. a.
+            IP-Adresse, Datum und Uhrzeit des Zugriffs, aufgerufene Seite,
+            verwendeter Browser) in sogenannten Server-Logfiles. Diese
+            Verarbeitung ist zum sicheren und stabilen Betrieb der Seite
+            erforderlich (Art. 6 Abs. 1 lit. f DSGVO) und wird von Vercel
+            automatisch nach kurzer Zeit (im verwendeten kostenlosen Tarif
+            nach wenigen Stunden) gelöscht. Da Vercel seinen Sitz in den
+            USA hat, erfolgt die Datenübermittlung auf Grundlage der von
+            Vercel abgeschlossenen EU-Standardvertragsklauseln.
           </p>
         </div>
 

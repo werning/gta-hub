@@ -10,41 +10,30 @@ export default function ImpressumPage() {
     <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6">
       <h1 className="text-3xl font-bold text-white">Impressum</h1>
 
-      <div className="mt-6 rounded-xl border border-dashed border-[#ff8fc0]/40 bg-[#ff2e88]/5 px-4 py-3 text-sm text-white/70">
-        <strong className="text-white">Vorlage, kein Rechtsrat.</strong> Trage
-        überall, wo{" "}
-        <code className="text-white/90">[in eckigen Klammern]</code> steht,
-        deine echten Angaben ein, bevor die Seite öffentlich online geht.
-        Ein Impressum ist in Deutschland für Seiten mit geschäftsmäßigem
-        Charakter – auch bei geplanter Monetarisierung – gesetzlich
-        vorgeschrieben (§ 5 Digitale-Dienste-Gesetz, § 18 Abs. 2
-        Medienstaatsvertrag). Lass den fertigen Text im Zweifel einmal
-        gegenprüfen, z. B. mit einem kostenlosen Impressum-Generator oder
-        durch eine Rechtsberatung.
-      </div>
-
       <section className="mt-8 space-y-6 text-white/80">
         <div>
           <h2 className="text-lg font-semibold text-white">
             Angaben gemäß § 5 DDG
           </h2>
           <p className="mt-2">
-            [Vor- und Nachname]
+            Thomas Werning
             <br />
-            [Straße und Hausnummer]
+            Am Floßgraben 2
             <br />
-            [Postleitzahl und Ort]
+            37276 Meinhard
             <br />
-            [Land]
+            Deutschland
           </p>
         </div>
 
         <div>
           <h2 className="text-lg font-semibold text-white">Kontakt</h2>
           <p className="mt-2">
-            E-Mail: [deine-email@beispiel.de]
+            E-Mail: info@o4p.de
             <br />
-            Telefon: [optional, aber empfohlen]
+            Telefon: 0174 9776596
+            <br />
+            Fax: 05651 338938
           </p>
         </div>
 
@@ -53,11 +42,11 @@ export default function ImpressumPage() {
             Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV
           </h2>
           <p className="mt-2">
-            [Vor- und Nachname]
+            Thomas Werning
             <br />
-            [Straße und Hausnummer]
+            Am Floßgraben 2
             <br />
-            [Postleitzahl und Ort]
+            37276 Meinhard
           </p>
         </div>
 
