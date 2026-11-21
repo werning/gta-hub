@@ -10,6 +10,7 @@ import path from "path";
 import {
   githubContentConfigured,
   githubDeleteFile,
+  githubGetFile,
   githubGetFileContent,
   githubListJsonFiles,
   githubPutFile,
@@ -113,8 +114,23 @@ export function createContentStore<T extends ContentItem>(
     }
   }
 
+  // Liest den aktuellen Stand des Eintrags live von GitHub statt aus dem
+  // lokalen Bundle, bevor der Status geändert wird – siehe getDraftsLive()
+  // oben. Ohne das schlug "Freigeben" fehl (stiller No-op), sobald ein
+  // Entwurf neuer war als das laufende Deployment: getBySlug() fand die
+  // Datei lokal nicht, setStatus brach wegen `if (!item) return;` ab, ohne
+  // dass auf GitHub etwas geändert wurde. Für Admins sah das aus wie ein
+  // Button, der erst nach mehreren Klicks reagiert.
+  async function getBySlugLive(slug: string): Promise<T | undefined> {
+    if (!githubContentConfigured()) {
+      return getBySlug(slug);
+    }
+    const json = await githubGetFile(`${CONTENT_REPO_DIR}/${slug}.json`);
+    return json ? (JSON.parse(json) as T) : undefined;
+  }
+
   async function setStatus(slug: string, status: ContentStatus) {
-    const item = getBySlug(slug);
+    const item = await getBySlugLive(slug);
     if (!item) return;
     item.status = status;
     const json = JSON.stringify(item, null, 2);

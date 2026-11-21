@@ -71,6 +71,20 @@ export async function githubGetFileContent(downloadUrl: string): Promise<string>
   return res.text();
 }
 
+// Liest eine einzelne Datei live über die Contents-API (inkl. base64-
+// dekodiertem Inhalt in einem Request). Für setStatus/approve genutzt,
+// damit auch Entwürfe freigegeben werden können, die erst nach dem
+// aktuell laufenden Deployment per Cron/API committet wurden und daher
+// noch nicht im lokalen Datei-Bundle dieser Funktion stecken.
+export async function githubGetFile(repoPath: string): Promise<string | undefined> {
+  const repo = process.env.GITHUB_REPO;
+  const branch = process.env.GITHUB_BRANCH || "main";
+  const res = await githubRequest(`/repos/${repo}/contents/${repoPath}?ref=${branch}`);
+  if (res.status === 404) return undefined;
+  const data = await res.json();
+  return Buffer.from(data.content, "base64").toString("utf-8");
+}
+
 export async function githubDeleteFile(repoPath: string, message: string) {
   const branch = process.env.GITHUB_BRANCH || "main";
   const sha = await getFileSha(repoPath, branch);
