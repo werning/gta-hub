@@ -1,28 +1,41 @@
 import type { Metadata } from "next";
-import { PlaceholderNotice } from "@/components/PlaceholderNotice";
 
 export const metadata: Metadata = {
   title: "Karte",
-  description: "Übersicht über die bekannten Orte und Regionen in GTA 6.",
+  description:
+    "Übersicht über die sechs offiziell bestätigten Regionen des Bundesstaats Leonida in GTA 6.",
 };
 
 const regions = [
   {
     name: "Vice City",
     description:
-      "Die Großstadt im Zentrum des Spiels – bekannt aus den offiziellen Trailern.",
+      "Die Großstadt im Zentrum des Spiels, angelehnt an Miami – Schauplatz der meisten Trailer-Szenen.",
   },
   {
     name: "Leonida Keys",
-    description: "Inselkette südlich der Stadt.",
+    description:
+      "Inselkette südlich der Stadt, Teil von Mariana County, dem südlichen Landkreis Leonidas.",
   },
   {
-    name: "Sumpfgebiete",
-    description: "Ländliche Feuchtgebiete außerhalb der Stadt.",
+    name: "Grassrivers",
+    description:
+      "Feuchtgebiete und Sumpflandschaft im Landesinneren, angelehnt an die Everglades.",
   },
   {
-    name: "Umland",
-    description: "Weitere Orte, die laufend ergänzt werden.",
+    name: "Port Gellhorn",
+    description:
+      "\"Die vergessene Küste\" im Westen – heruntergekommene Ferienorte und leerstehende Attraktionen, angelehnt an Floridas Panhandle.",
+  },
+  {
+    name: "Ambrosia",
+    description:
+      "Industrie- und Arbeiterregion am Lake Leonida, geprägt von der Zuckerraffinerie Allied Crystal.",
+  },
+  {
+    name: "Mount Kalaga",
+    description:
+      "Nationalpark und Wildnis im Norden mit Wäldern, Bergen und Offroad-Strecken.",
   },
 ];
 
@@ -32,16 +45,11 @@ export default function KartePage() {
       <header className="mb-10">
         <h1 className="text-3xl font-bold text-white sm:text-4xl">Karte</h1>
         <p className="mt-3 max-w-2xl text-white/60">
-          Eine eigene, schematische Übersicht der bekannten Orte und
-          Regionen – keine Spielgrafik, sondern eine selbst gestaltete
-          Orientierungshilfe.
+          Eine eigene, schematische Übersicht der sechs offiziell
+          bestätigten Regionen des Bundesstaats Leonida – keine
+          Spielgrafik, sondern eine selbst gestaltete Orientierungshilfe.
         </p>
       </header>
-
-      <PlaceholderNotice>
-        Diese Übersicht wird interaktiv ausgebaut, sobald mehr Orte
-        bestätigt sind.
-      </PlaceholderNotice>
 
       {/* Stylised, own illustration – not game artwork */}
       <div className="relative mb-10 overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-[#14081f] to-[#0b0414] p-6">
