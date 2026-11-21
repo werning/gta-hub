@@ -14,6 +14,7 @@ export function AdminNav({ current }: { current: string }) {
         <Link
           key={section.href}
           href={section.href}
+          prefetch={false}
           className={
             section.href === current
               ? "font-semibold text-white"

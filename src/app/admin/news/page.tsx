@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 import { getDraftArticlesLive } from "@/lib/articles";
 import { isAdminAuthenticated } from "@/lib/admin-auth";
 import { approveArticle, logout, rejectArticle } from "../actions";
-import { SubmitButton } from "@/components/SubmitButton";
+import { ApprovalButtons } from "@/components/ApprovalButtons";
 import { AdminNav } from "@/components/AdminNav";
 
 export const metadata: Metadata = {
@@ -72,24 +72,10 @@ export default async function AdminNewsPage() {
               </a>
             </p>
 
-            <div className="mt-5 flex gap-3">
-              <form action={approveArticle.bind(null, article.slug)}>
-                <SubmitButton
-                  pendingText="Wird freigegeben …"
-                  className="rounded-full bg-gradient-to-r from-[#ff2e88] to-[#6c1bd6] px-5 py-2 text-sm font-semibold text-white transition-opacity"
-                >
-                  Freigeben
-                </SubmitButton>
-              </form>
-              <form action={rejectArticle.bind(null, article.slug)}>
-                <SubmitButton
-                  pendingText="Wird verworfen …"
-                  className="rounded-full border border-white/20 px-5 py-2 text-sm text-white/70 transition-colors hover:bg-white/5"
-                >
-                  Verwerfen
-                </SubmitButton>
-              </form>
-            </div>
+            <ApprovalButtons
+              onApprove={approveArticle.bind(null, article.slug)}
+              onReject={rejectArticle.bind(null, article.slug)}
+            />
           </article>
         ))}
       </div>

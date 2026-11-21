@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 import { getDraftTippsLive } from "@/lib/tipps";
 import { isAdminAuthenticated } from "@/lib/admin-auth";
 import { approveTipp, logout, rejectTipp } from "../actions";
-import { SubmitButton } from "@/components/SubmitButton";
+import { ApprovalButtons } from "@/components/ApprovalButtons";
 import { AdminNav } from "@/components/AdminNav";
 
 export const metadata: Metadata = {
@@ -72,24 +72,10 @@ export default async function AdminTippsPage() {
               </a>
             </p>
 
-            <div className="mt-5 flex gap-3">
-              <form action={approveTipp.bind(null, tipp.slug)}>
-                <SubmitButton
-                  pendingText="Wird freigegeben …"
-                  className="rounded-full bg-gradient-to-r from-[#ff2e88] to-[#6c1bd6] px-5 py-2 text-sm font-semibold text-white transition-opacity"
-                >
-                  Freigeben
-                </SubmitButton>
-              </form>
-              <form action={rejectTipp.bind(null, tipp.slug)}>
-                <SubmitButton
-                  pendingText="Wird verworfen …"
-                  className="rounded-full border border-white/20 px-5 py-2 text-sm text-white/70 transition-colors hover:bg-white/5"
-                >
-                  Verwerfen
-                </SubmitButton>
-              </form>
-            </div>
+            <ApprovalButtons
+              onApprove={approveTipp.bind(null, tipp.slug)}
+              onReject={rejectTipp.bind(null, tipp.slug)}
+            />
           </article>
         ))}
       </div>

@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 import { getDraftHacksLive } from "@/lib/hacks";
 import { isAdminAuthenticated } from "@/lib/admin-auth";
 import { approveHack, logout, rejectHack } from "../actions";
-import { SubmitButton } from "@/components/SubmitButton";
+import { ApprovalButtons } from "@/components/ApprovalButtons";
 import { AdminNav } from "@/components/AdminNav";
 
 export const metadata: Metadata = {
@@ -74,24 +74,10 @@ export default async function AdminHacksPage() {
               </a>
             </p>
 
-            <div className="mt-5 flex gap-3">
-              <form action={approveHack.bind(null, hack.slug)}>
-                <SubmitButton
-                  pendingText="Wird freigegeben …"
-                  className="rounded-full bg-gradient-to-r from-[#ff2e88] to-[#6c1bd6] px-5 py-2 text-sm font-semibold text-white transition-opacity"
-                >
-                  Freigeben
-                </SubmitButton>
-              </form>
-              <form action={rejectHack.bind(null, hack.slug)}>
-                <SubmitButton
-                  pendingText="Wird verworfen …"
-                  className="rounded-full border border-white/20 px-5 py-2 text-sm text-white/70 transition-colors hover:bg-white/5"
-                >
-                  Verwerfen
-                </SubmitButton>
-              </form>
-            </div>
+            <ApprovalButtons
+              onApprove={approveHack.bind(null, hack.slug)}
+              onReject={rejectHack.bind(null, hack.slug)}
+            />
           </article>
         ))}
       </div>
