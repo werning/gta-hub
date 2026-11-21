@@ -10,8 +10,14 @@ export function githubContentConfigured(): boolean {
 }
 
 async function githubRequest(path: string, init?: RequestInit) {
+  // "cache: no-store" ist Pflicht: Next.js' erweitertes fetch() cacht GET-
+  // Requests sonst standardmäßig (Data Cache). Ohne das lasen getFileSha/
+  // githubListJsonFiles/githubGetFile teils veraltete Stände – u. a. die
+  // sha aus getFileSha, wodurch der nachfolgende PUT/DELETE mit "falscher"
+  // sha gegen den inzwischen aktuellen GitHub-Stand lief.
   const res = await fetch(`${GITHUB_API}${path}`, {
     ...init,
+    cache: "no-store",
     headers: {
       Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
       Accept: "application/vnd.github+json",
