@@ -61,20 +61,18 @@ export async function githubPutFile(
   });
 }
 
-export async function githubListJsonFiles(
-  repoDir: string
-): Promise<{ name: string; download_url: string }[]> {
+// Nur Dateinamen, keine Inhalte: Die Verzeichnis-Auflistung der Contents-
+// API liefert zwar auch einen download_url je Datei, der zeigt aber auf
+// raw.githubusercontent.com, das GitHub über ein eigenes CDN mit
+// mehrminütiger Verzögerung ausliefert. Den tatsächlichen Inhalt daher
+// separat über githubGetFile() (api.github.com, immer aktuell) laden.
+export async function githubListJsonFiles(repoDir: string): Promise<{ name: string }[]> {
   const repo = process.env.GITHUB_REPO;
   const branch = process.env.GITHUB_BRANCH || "main";
   const res = await githubRequest(`/repos/${repo}/contents/${repoDir}?ref=${branch}`);
   if (res.status === 404) return [];
-  const data = (await res.json()) as { name: string; download_url: string }[];
+  const data = (await res.json()) as { name: string }[];
   return data.filter((f) => f.name.endsWith(".json") && !f.name.startsWith("_"));
-}
-
-export async function githubGetFileContent(downloadUrl: string): Promise<string> {
-  const res = await fetch(downloadUrl, { cache: "no-store" });
-  return res.text();
 }
 
 // Liest eine einzelne Datei live über die Contents-API (inkl. base64-

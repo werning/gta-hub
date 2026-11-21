@@ -11,7 +11,6 @@ import {
   githubContentConfigured,
   githubDeleteFile,
   githubGetFile,
-  githubGetFileContent,
   githubListJsonFiles,
   githubPutFile,
 } from "./github-content";
@@ -79,15 +78,24 @@ export function createContentStore<T extends ContentItem>(
   // durchgelaufen ist – das sah für Admins wie ein Button aus, der erst
   // nach mehreren Klicks reagiert. `getDraftsLive()` umgeht das, indem es
   // den aktuellen Verzeichnisinhalt direkt von GitHub holt.
+  //
+  // Wichtig: Jede Datei wird über githubGetFile() (api.github.com) gelesen,
+  // NICHT über den download_url-Link aus der Verzeichnis-Auflistung. Der
+  // download_url zeigt auf raw.githubusercontent.com, das GitHub über ein
+  // eigenes CDN mit mehreren Minuten Verzögerung ausliefert – frisch
+  // freigegebene Einträge blieben darüber bis zu einigen Minuten als
+  // Entwurf sichtbar, obwohl der Commit längst durch war. api.github.com
+  // liefert dagegen immer den aktuellen Stand.
   async function getDraftsLive(): Promise<T[]> {
     if (!githubContentConfigured()) {
       return getDrafts();
     }
     const files = await githubListJsonFiles(CONTENT_REPO_DIR);
     const items = await Promise.all(
-      files.map((f) => githubGetFileContent(f.download_url))
+      files.map((f) => githubGetFile(`${CONTENT_REPO_DIR}/${f.name}`))
     );
     return items
+      .filter((json): json is string => Boolean(json))
       .map((json) => JSON.parse(json) as T)
       .filter((item) => item.status === "draft")
       .sort((a, b) => (a.publishedAt < b.publishedAt ? 1 : -1));
